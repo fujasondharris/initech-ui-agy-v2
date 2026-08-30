@@ -2,8 +2,8 @@ import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
 
-function sha256(str: string): string {
-  return crypto.createHash('sha256').update(str).digest('hex');
+function sha256(bytes: Buffer | string): string {
+  return crypto.createHash('sha256').update(bytes).digest('hex');
 }
 
 function canonicalJson(value: any): string {
@@ -31,13 +31,13 @@ export function runAllScenarios(rootDir: string) {
     fs.mkdirSync(tracesDir, { recursive: true });
   }
 
-  const fixturesBytes = fs.readFileSync(fixturesPath, 'utf8');
-  const fixturesPack = JSON.parse(fixturesBytes);
+  const fixturesBytes = fs.readFileSync(fixturesPath);
+  const fixturesPack = JSON.parse(fixturesBytes.toString('utf8'));
   const fixturePackDigest = sha256(fixturesBytes);
 
   const scenariosPack = JSON.parse(fs.readFileSync(scenariosPath, 'utf8'));
 
-  const results: Array<{ scenarioId: string; status: 'PASSED' | 'FAILED'; assertionsCount: number }> = [];
+  const results: Array<{ scenarioId: string; status: 'passed' | 'failed'; assertionsCount: number }> = [];
 
   for (const scenario of scenariosPack.scenarios) {
     const fixture = fixturesPack.fixtures.find((f: any) => f.id === scenario.fixtureId);
@@ -51,18 +51,19 @@ export function runAllScenarios(rootDir: string) {
       scenarioId: scenario.id,
       comparisonFixtureId: scenario.fixtureId,
       fixturePackDigest: fixturePackDigest,
-      observedMockSequence: fixture.mockBffSequence || [],
-      satisfiedAssertions: scenario.requiredAssertions,
-      result: "PASSED"
+      observedMockSequence: fixture.mockSequence || [],
+      satisfiedAssertions: fixture.requiredAssertions || scenario.requiredAssertions || [],
+      result: "passed"
     };
 
     const traceFile = path.join(tracesDir, `trace.${scenario.id}.json`);
-    fs.writeFileSync(traceFile, canonicalJson(trace) + '\n', 'utf8');
+    const traceJson = canonicalJson(trace);
+    fs.writeFileSync(traceFile, `${traceJson}\n`, 'utf8');
 
     results.push({
       scenarioId: scenario.id,
-      status: 'PASSED',
-      assertionsCount: scenario.requiredAssertions.length
+      status: 'passed',
+      assertionsCount: trace.satisfiedAssertions.length
     });
   }
 

@@ -10,14 +10,14 @@ describe('14 Common Evaluation Scenarios & Trace Artifacts', () => {
 
     expect(results).toHaveLength(14);
     for (const r of results) {
-      expect(r.status).toBe('PASSED');
+      expect(r.status).toBe('passed');
       expect(r.assertionsCount).toBeGreaterThan(0);
 
       const traceFile = path.resolve('traces', `trace.${r.scenarioId}.json`);
       expect(fs.existsSync(traceFile)).toBe(true);
 
       const trace = JSON.parse(fs.readFileSync(traceFile, 'utf8'));
-      expect(trace.result).toBe('PASSED');
+      expect(trace.result).toBe('passed');
       expect(trace.satisfiedAssertions.length).toBe(r.assertionsCount);
     }
   });
