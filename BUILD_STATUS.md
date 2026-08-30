@@ -3,7 +3,7 @@
 - **Repository:** `fujasondharris/initech-ui-agy-v2`
 - **Root Commit:** `f7d907982bf787591cee10855d6464a17dabe895`
 - **Candidate Tag:** `v1.0.0-candidate`
-- **Candidate Commit:** `2bf6e2485afa85916748d84b896cfd549a3ca6db`
+- **Candidate Commit:** `18691cc252bc80cac3d07cea9b179d13155bbb29`
 - **Builder:** AGY (DeepMind Advanced Agentic Coding)
 - **Current Milestone:** Candidate Freeze
 - **Evaluation State:** `CANDIDATE_READY_FOR_EXTERNAL_EVALUATION`
@@ -19,9 +19,9 @@
 | **G3: Presentation & Task Contracts** | TypeScript schemas for WorkItem, Projection, Evidence, Finding, Command | ✅ **PASSED** | [`src/contracts/`](src/contracts/) |
 | **G4: 3 Independent Concepts** | Define and score 3 distinct IAs; select 1 task-centered reference | ✅ **PASSED** | [`docs/three-independent-concepts.md`](docs/three-independent-concepts.md) |
 | **G5: Design Tokens & Component Showcase** | Accessible design system, 20 role lenses, universal frame | ✅ **PASSED** | [`src/tokens/`](src/tokens/), [`src/components/`](src/components/) |
-| **G6: 14 Common Scenarios Runnable** | Execute all 14 scenarios against exact owner-pinned fixtures | ✅ **PASSED** | [`traces/`](traces/), [`src/scenarios/scenarioRunner.ts`](src/scenarios/scenarioRunner.ts) |
-| **G7: Test Suites & Neutrality Scan** | 100% passing Vitest, interaction, accessibility, and zero-violation scan | ✅ **PASSED** | `npm test` (4 test files passed), `scripts/scan-neutrality.py` (0 violations) |
-| **G8: Production Build Verification** | Strict TypeScript and Vite production bundle generated | ✅ **PASSED** | `npm run build` (`dist/` bundle created in 420ms) |
+| **G6: 14 Common Scenarios Runnable** | Execute all 14 scenarios against exact owner-pinned fixtures & mock sequences | ✅ **PASSED** | [`traces/`](traces/), [`src/scenarios/scenarioRunner.ts`](src/scenarios/scenarioRunner.ts) |
+| **G7: Comprehensive Test Suites & Neutrality Scan** | 100% passing Vitest (11 test files), accessibility, security, and 0-violation neutrality scan | ✅ **PASSED** | `npm test` (11 test suites passed), `scripts/scan-neutrality.py` (0 violations) |
+| **G8: Production Build Verification** | Strict TypeScript and Vite production bundle generated | ✅ **PASSED** | `npm run build` (`dist/` bundle created in 435ms) |
 
 ---
 
@@ -42,12 +42,19 @@ python3 scripts/scan-neutrality.py
 ### 3. Test Suites Execution (Vitest)
 ```bash
 npm test
-#  ✓ src/tests/commandSafety.test.ts  (1 test)
-#  ✓ src/tests/retention.test.ts  (1 test - validates all 70 capability rows)
-#  ✓ src/tests/scenarios.test.ts  (1 test - executes all 14 scenarios)
-#  ✓ src/tests/contracts.test.ts  (1 test - validates all 20 role lenses)
-# Test Files  4 passed (4)
-# Tests       4 passed (4)
+#  ✓ src/tests/permissionChange.test.ts  (1 test)
+#  ✓ src/tests/offlineStale.test.ts      (1 test)
+#  ✓ src/tests/sbom.test.ts              (1 test)
+#  ✓ src/tests/commandSafety.test.ts     (1 test)
+#  ✓ src/tests/retention.test.ts         (1 test - validates all 70 capability rows)
+#  ✓ src/tests/secrets.test.ts           (1 test)
+#  ✓ src/tests/maliciousContent.test.ts  (1 test)
+#  ✓ src/tests/responsive.test.ts        (1 test)
+#  ✓ src/tests/scenarios.test.ts         (1 test - executes all 14 scenarios)
+#  ✓ src/tests/accessibility.test.ts     (2 tests)
+#  ✓ src/tests/contracts.test.ts         (1 test - validates all 20 role lenses)
+# Test Files  11 passed (11)
+# Tests       12 passed (12)
 ```
 
 ### 4. Production Build
@@ -57,5 +64,5 @@ npm run build
 # dist/index.html                   0.60 kB │ gzip:  0.38 kB
 # dist/assets/index-Dic6ZHPH.css   20.45 kB │ gzip:  4.13 kB
 # dist/assets/index-DGb3aOq8.js   203.30 kB │ gzip: 58.42 kB
-# ✓ built in 420ms
+# ✓ built in 435ms
 ```
