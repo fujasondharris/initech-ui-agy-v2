@@ -1,0 +1,24 @@
+# Dependencies
+node_modules/
+.pnp/
+.pnp.js
+
+# Build outputs
+dist/
+dist-ssr/
+build/
+*.tsbuildinfo
+
+# Caches & Test artifacts
+.cache/
+.tmp/
+.vite/
+.vitest/
+coverage/
+
+# OS & Editor files
+.DS_Store
+*.local
+*.log
+.vscode/
+.idea/
