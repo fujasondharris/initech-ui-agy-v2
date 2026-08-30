@@ -116,6 +116,23 @@ export const App: React.FC = () => {
       doneCriteria: 'FHA B2G Insurance application accepted with 0 kickouts.',
       assignedTo: 'Government Insuring Desk',
       createdAt: '2026-08-30T11:00:00Z'
+    },
+    {
+      id: 'task-5',
+      loanId: mockLoan.loanId,
+      loanNumber: mockLoan.loanNumber,
+      borrowerName: mockLoan.borrowerName,
+      roleLensId: 'compliance',
+      taskToolId: 'compliance_mavent',
+      title: 'Audit ATR-QM Points & Fees and HOEPA APOR Spread',
+      description: 'Run automated regulatory rule tests across 3% points/fees cap, Section 32/35 rate spreads, and TRID cures.',
+      priority: 'urgent',
+      status: 'ready',
+      slaDeadline: 'Today 18:00 CDT',
+      preconditions: ['Locked Loan Estimate', 'Settlement Fee Schedule'],
+      doneCriteria: '100% compliance audit pass without uncurable tolerance violations.',
+      assignedTo: 'Compliance Officer',
+      createdAt: '2026-08-30T11:30:00Z'
     }
   ];
 
@@ -237,7 +254,7 @@ export const App: React.FC = () => {
             activeTab === 'studios' ? 'border-cyan-400 text-cyan-300 bg-slate-900' : 'border-transparent text-slate-400 hover:text-slate-200'
           }`}
         >
-          🔧 Task Studios (10)
+          🔧 Task Studios (11)
         </button>
 
         <button

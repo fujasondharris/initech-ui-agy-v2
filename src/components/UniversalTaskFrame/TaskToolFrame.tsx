@@ -10,6 +10,7 @@ import { BalanceCdSettlementTool } from '../TaskStudios/BalanceCdSettlementTool'
 import { GovernmentInsuringTool } from '../TaskStudios/GovernmentInsuringTool';
 import { PostClosingFleetTool } from '../TaskStudios/PostClosingFleetTool';
 import { ConditionsClearanceTool } from '../TaskStudios/ConditionsClearanceTool';
+import { ComplianceMaventStudio } from '../TaskStudios/ComplianceMaventStudio';
 
 interface TaskToolFrameProps {
   loanNumber: string;
@@ -33,6 +34,7 @@ export const TaskToolFrame: React.FC<TaskToolFrameProps> = ({
     { id: 'order_services', title: 'Dual AUS Ordering Hub', icon: '⚡' },
     { id: 'disclose_loan', title: 'TRID Disclosures Tool', icon: '📜' },
     { id: 'balance_cd', title: '3-Party Fee Control & CD', icon: '⚖️' },
+    { id: 'compliance_mavent', title: 'Regulatory Compliance Engine', icon: '🛡️' },
     { id: 'insure_loan', title: 'Government Insuring Tool', icon: '🏛️' },
     { id: 'post_closing_fleet', title: 'Post-Closing Fleet', icon: '🚢' },
     { id: 'clear_conditions', title: 'Conditions Clearance', icon: '✅' },
@@ -49,6 +51,7 @@ export const TaskToolFrame: React.FC<TaskToolFrameProps> = ({
       case 'order_services': return <DualAusOrderingHub loanNumber={loanNumber} />;
       case 'disclose_loan': return <DiscloseLoanTool loanNumber={loanNumber} />;
       case 'balance_cd': return <BalanceCdSettlementTool loanNumber={loanNumber} />;
+      case 'compliance_mavent': return <ComplianceMaventStudio loanNumber={loanNumber} />;
       case 'insure_loan': return <GovernmentInsuringTool loanNumber={loanNumber} />;
       case 'post_closing_fleet': return <PostClosingFleetTool loanNumber={loanNumber} />;
       case 'clear_conditions': return <ConditionsClearanceTool loanNumber={loanNumber} />;

@@ -40,6 +40,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
     { id: 'tool_condo', label: 'Open Condo Project Clearance Engine', type: 'tool', toolId: 'review_condo' as TaskToolId, icon: '🏢' },
     { id: 'tool_aus', label: 'Open Dual AUS Comparative Matrix', type: 'tool', toolId: 'order_services' as TaskToolId, icon: '⚡' },
     { id: 'tool_cd', label: 'Open 3-Party Fee Control & CD Balancing', type: 'tool', toolId: 'balance_cd' as TaskToolId, icon: '⚖️' },
+    { id: 'tool_compliance', label: 'Open Regulatory Compliance Engine (QM & APOR)', type: 'tool', toolId: 'compliance_mavent' as TaskToolId, icon: '🛡️' },
     { id: 'tool_insuring', label: 'Open Government Insuring Gateway', type: 'tool', toolId: 'insure_loan' as TaskToolId, icon: '🏛️' },
     { id: 'tool_postclosing', label: 'Open Post-Closing Investor Fleet', type: 'tool', toolId: 'post_closing_fleet' as TaskToolId, icon: '🚢' },
     { id: 'lens_underwriter', label: 'Switch Role to Credit Underwriter', type: 'lens', lensId: 'underwriter' as LensId, icon: '⚖️' },

@@ -21,7 +21,8 @@ export type TaskToolId =
   | 'disclose_loan'
   | 'order_services'
   | 'clear_conditions'
-  | 'post_closing_fleet';
+  | 'post_closing_fleet'
+  | 'compliance_mavent';
 
 export interface WorkItem {
   id: string;
