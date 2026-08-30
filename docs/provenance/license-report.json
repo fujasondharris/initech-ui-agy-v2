@@ -1,0 +1,26 @@
+{
+  "schemaVersion": "1.0.0",
+  "summary": "100% Permissive Open Source Dependencies (MIT / Apache-2.0)",
+  "dependencies": [
+    {
+      "name": "react",
+      "license": "MIT",
+      "compliant": true
+    },
+    {
+      "name": "react-dom",
+      "license": "MIT",
+      "compliant": true
+    },
+    {
+      "name": "clsx",
+      "license": "MIT",
+      "compliant": true
+    },
+    {
+      "name": "tailwind-merge",
+      "license": "MIT",
+      "compliant": true
+    }
+  ]
+}

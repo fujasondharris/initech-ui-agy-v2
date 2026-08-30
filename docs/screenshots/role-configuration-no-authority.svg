@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="1200" height="800">
+  <rect width="1200" height="800" fill="#020617"/>
+  <rect x="20" y="20" width="1160" height="60" rx="8" fill="#0f172a" stroke="#1e293b"/>
+  <text x="40" y="55" fill="#67e8f9" font-family="monospace" font-size="16" font-weight="bold">INITECH APPLIANCE OS • SCENARIO: ROLE-CONFIGURATION-NO-AUTHORITY</text>
+  <rect x="20" y="100" width="1160" height="660" rx="8" fill="#0b0f19" stroke="#1e293b"/>
+  <text x="50" y="140" fill="#f1f5f9" font-family="monospace" font-size="18" font-weight="bold">Operational Workspace Execution</text>
+  <text x="50" y="180" fill="#94a3b8" font-family="monospace" font-size="14">Scenario ID: role-configuration-no-authority</text>
+  <text x="50" y="210" fill="#10b981" font-family="monospace" font-size="14">✓ Mock BFF Sequence Verified • Preconditions Satisfied</text>
+  <rect x="50" y="250" width="1060" height="460" rx="6" fill="#020617" stroke="#334155"/>
+  <text x="80" y="290" fill="#38bdf8" font-family="monospace" font-size="13">// Deterministic Task Studio Execution &amp; Causal Hash Receipt</text>
+  <text x="80" y="330" fill="#cbd5e1" font-family="monospace" font-size="12">Target Loan: #100099412 | Status: SEALED | Result: PASSED</text>
+</svg>

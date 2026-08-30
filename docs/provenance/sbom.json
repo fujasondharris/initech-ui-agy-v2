@@ -1,0 +1,62 @@
+{
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.4",
+  "version": 1,
+  "metadata": {
+    "component": {
+      "name": "initech-ui-agy-v2",
+      "version": "1.0.0",
+      "type": "application"
+    }
+  },
+  "components": [
+    {
+      "name": "react",
+      "version": "18.3.1",
+      "purl": "pkg:npm/react@18.3.1",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ]
+    },
+    {
+      "name": "react-dom",
+      "version": "18.3.1",
+      "purl": "pkg:npm/react-dom@18.3.1",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ]
+    },
+    {
+      "name": "clsx",
+      "version": "2.1.1",
+      "purl": "pkg:npm/clsx@2.1.1",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ]
+    },
+    {
+      "name": "tailwind-merge",
+      "version": "2.3.0",
+      "purl": "pkg:npm/tailwind-merge@2.3.0",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ]
+    }
+  ]
+}

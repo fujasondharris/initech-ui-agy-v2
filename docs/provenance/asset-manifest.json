@@ -1,0 +1,75 @@
+{
+  "schemaVersion": "1.0.0",
+  "assets": [
+    {
+      "id": "screenshot-originator-qualification",
+      "path": "docs/screenshots/originator-qualification.svg",
+      "license": "CC0-1.0-Universal"
+    },
+    {
+      "id": "screenshot-setup-evidence-ambiguity",
+      "path": "docs/screenshots/setup-evidence-ambiguity.svg",
+      "license": "CC0-1.0-Universal"
+    },
+    {
+      "id": "screenshot-processor-orchestration",
+      "path": "docs/screenshots/processor-orchestration.svg",
+      "license": "CC0-1.0-Universal"
+    },
+    {
+      "id": "screenshot-underwriter-adjudication",
+      "path": "docs/screenshots/underwriter-adjudication.svg",
+      "license": "CC0-1.0-Universal"
+    },
+    {
+      "id": "screenshot-compliance-fee-timing",
+      "path": "docs/screenshots/compliance-fee-timing.svg",
+      "license": "CC0-1.0-Universal"
+    },
+    {
+      "id": "screenshot-closing-change-readiness",
+      "path": "docs/screenshots/closing-change-readiness.svg",
+      "license": "CC0-1.0-Universal"
+    },
+    {
+      "id": "screenshot-funding-effect-unknown",
+      "path": "docs/screenshots/funding-effect-unknown.svg",
+      "license": "CC0-1.0-Universal"
+    },
+    {
+      "id": "screenshot-handoff-reject-repair",
+      "path": "docs/screenshots/handoff-reject-repair.svg",
+      "license": "CC0-1.0-Universal"
+    },
+    {
+      "id": "screenshot-insurance-suspense",
+      "path": "docs/screenshots/insurance-suspense.svg",
+      "license": "CC0-1.0-Universal"
+    },
+    {
+      "id": "screenshot-secondary-expiration-delivery",
+      "path": "docs/screenshots/secondary-expiration-delivery.svg",
+      "license": "CC0-1.0-Universal"
+    },
+    {
+      "id": "screenshot-postclose-trailing-suspense",
+      "path": "docs/screenshots/postclose-trailing-suspense.svg",
+      "license": "CC0-1.0-Universal"
+    },
+    {
+      "id": "screenshot-role-configuration-no-authority",
+      "path": "docs/screenshots/role-configuration-no-authority.svg",
+      "license": "CC0-1.0-Universal"
+    },
+    {
+      "id": "screenshot-install-fresh-vs-adoption",
+      "path": "docs/screenshots/install-fresh-vs-adoption.svg",
+      "license": "CC0-1.0-Universal"
+    },
+    {
+      "id": "screenshot-lifecycle-migration-recovery",
+      "path": "docs/screenshots/lifecycle-migration-recovery.svg",
+      "license": "CC0-1.0-Universal"
+    }
+  ]
+}
