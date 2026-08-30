@@ -3,7 +3,7 @@
 - **Repository:** `fujasondharris/initech-ui-agy-v2`
 - **Root Commit:** `f7d907982bf787591cee10855d6464a17dabe895`
 - **Candidate Tag:** `v1.0.0-candidate`
-- **Candidate Commit:** `45adb91f7124269e9be4ab1b9afff23bffcdc8bb`
+- **Candidate Commit:** `0b14dec8688d04962c0f1b6da0ff7c236377721a`
 - **Builder:** AGY (DeepMind Advanced Agentic Coding)
 - **Current Milestone:** Candidate Freeze
 - **Evaluation State:** `CANDIDATE_READY_FOR_EXTERNAL_EVALUATION`
@@ -18,7 +18,7 @@
 | **G2: 70-Row Retention Ledger** | Complete mapping of all 70 retention rows with routes, contracts, tests | ✅ **PASSED** | [`docs/behavior-retention.json`](docs/behavior-retention.json) |
 | **G3: Presentation & Task Contracts** | TypeScript schemas for WorkItem, Projection, Evidence, Finding, Command | ✅ **PASSED** | [`src/contracts/`](src/contracts/) |
 | **G4: 3 Independent Concepts** | Define and score 3 distinct IAs; select 1 task-centered reference | ✅ **PASSED** | [`docs/three-independent-concepts.md`](docs/three-independent-concepts.md) |
-| **G5: Design Tokens, State Matrix & Component Showcase** | Accessible design system, 20 role lenses, 24-state dimension inspector | ✅ **PASSED** | [`src/tokens/`](src/tokens/), [`src/components/Showcase/StateMatrixInspector.tsx`](src/components/Showcase/StateMatrixInspector.tsx) |
+| **G5: Design Tokens, State Matrix & Component Showcase** | Accessible design system, 20 role lenses, 24-state dimension inspector, 11 task studios | ✅ **PASSED** | [`src/tokens/`](src/tokens/), [`src/components/Showcase/StateMatrixInspector.tsx`](src/components/Showcase/StateMatrixInspector.tsx), [`src/components/TaskStudios/`](src/components/TaskStudios/) |
 | **G6: 14 Common Scenarios Runnable** | Execute all 14 scenarios against exact owner-pinned fixtures & mock sequences | ✅ **PASSED** | [`traces/`](traces/), [`src/scenarios/scenarioRunner.ts`](src/scenarios/scenarioRunner.ts) |
 | **G7: Comprehensive Test Suites & Neutrality Scan** | 100% passing Vitest (11 test files), accessibility, security, and 0-violation neutrality scan | ✅ **PASSED** | `npm test` (11 test suites passed), `scripts/scan-neutrality.py` (0 violations) |
 | **G8: Concept Export & Production Build Verification** | Validated canonical concept-export.json and production bundle | ✅ **PASSED** | [`concept-export.json`](concept-export.json), `npm run build` |
@@ -42,8 +42,8 @@ python3 scripts/scan-neutrality.py
 ### 3. Test Suites Execution (Vitest)
 ```bash
 npm test
-#  ✓ src/tests/maliciousContent.test.ts  (1 test)
 #  ✓ src/tests/permissionChange.test.ts  (1 test)
+#  ✓ src/tests/maliciousContent.test.ts  (1 test)
 #  ✓ src/tests/commandSafety.test.ts     (1 test)
 #  ✓ src/tests/offlineStale.test.ts      (1 test)
 #  ✓ src/tests/sbom.test.ts              (1 test)
@@ -62,7 +62,7 @@ npm test
 npm run build
 # vite v5.4.21 building for production...
 # dist/index.html                   0.60 kB │ gzip:  0.38 kB
-# dist/assets/index-G4LmYYdq.css   20.98 kB │ gzip:  4.23 kB
-# dist/assets/index-C8-U3ch8.js   212.64 kB │ gzip: 60.76 kB
-# ✓ built in 414ms
+# dist/assets/index-Cbju-pnu.css   21.18 kB │ gzip:  4.27 kB
+# dist/assets/index-Bxg9sxvn.js   239.29 kB │ gzip: 65.21 kB
+# ✓ built in 439ms
 ```
