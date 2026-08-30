@@ -1,0 +1,2254 @@
+{
+  "schemaVersion": "1.0.0",
+  "fixturePackId": "initech-common-evaluation-1",
+  "fixedClock": "2026-01-15T15:00:00Z",
+  "seed": "initech-independent-ui-common-seed-1",
+  "syntheticOnly": true,
+  "rule": "Both experiments must ingest these exact bytes and use each fixture for its named common scenario. Supplemental fixtures are allowed but cannot replace, mutate, or make scoring easier than this common pack.",
+  "base": {
+    "tenantId": "tenant.synthetic-01",
+    "loanId": "loan.synthetic-001",
+    "subjects": [
+      {
+        "id": "subject.borrower-01",
+        "kind": "borrower",
+        "label": "Synthetic borrower A"
+      },
+      {
+        "id": "subject.employer-01",
+        "kind": "employer",
+        "label": "Synthetic employer A"
+      },
+      {
+        "id": "subject.property-01",
+        "kind": "property",
+        "label": "Synthetic property A"
+      }
+    ],
+    "facts": [
+      {
+        "id": "fact.application-date",
+        "value": "2026-01-05",
+        "observation": "observed",
+        "access": "permitted",
+        "validity": "valid",
+        "sourceRef": "document.application-v1"
+      },
+      {
+        "id": "fact.requested-amount",
+        "value": "360000.00",
+        "observation": "observed",
+        "access": "permitted",
+        "validity": "valid",
+        "sourceRef": "document.application-v1"
+      },
+      {
+        "id": "fact.purchase-price",
+        "value": "420000.00",
+        "observation": "observed",
+        "access": "permitted",
+        "validity": "valid",
+        "sourceRef": "document.contract-v1"
+      },
+      {
+        "id": "fact.monthly-debt",
+        "value": "1450.00",
+        "observation": "observed",
+        "access": "permitted",
+        "validity": "review",
+        "sourceRef": "evidence.credit-v1"
+      },
+      {
+        "id": "fact.liquid-assets",
+        "value": "78000.00",
+        "observation": "observed",
+        "access": "permitted",
+        "validity": "valid",
+        "sourceRef": "document.asset-statement-v1"
+      }
+    ],
+    "documents": [
+      {
+        "id": "document.application-v1",
+        "kind": "application",
+        "subjectRef": "subject.borrower-01",
+        "version": 1,
+        "pageCount": 8,
+        "contentRef": "synthetic-application-v1",
+        "signed": true,
+        "documentDate": "2026-01-05"
+      },
+      {
+        "id": "document.income-statement-v1",
+        "kind": "income_evidence",
+        "subjectRef": "subject.borrower-01",
+        "employerRef": "subject.employer-01",
+        "version": 1,
+        "pageCount": 2,
+        "contentRef": "synthetic-income-v1",
+        "periodStart": "2025-12-16",
+        "periodEnd": "2025-12-31",
+        "grossAmount": "4615.38"
+      },
+      {
+        "id": "document.asset-statement-v1",
+        "kind": "asset_evidence",
+        "subjectRef": "subject.borrower-01",
+        "version": 1,
+        "pageCount": 4,
+        "contentRef": "synthetic-assets-v1",
+        "periodStart": "2025-12-01",
+        "periodEnd": "2025-12-31",
+        "endingBalance": "78000.00"
+      },
+      {
+        "id": "document.contract-v1",
+        "kind": "purchase_contract",
+        "subjectRef": "subject.property-01",
+        "version": 1,
+        "pageCount": 12,
+        "contentRef": "synthetic-contract-v1",
+        "signed": true,
+        "documentDate": "2026-01-04"
+      }
+    ]
+  },
+  "mockBffContract": {
+    "version": "1.0.0",
+    "transport": "in-process deterministic request-response fixture",
+    "readOperations": [
+      "task.list",
+      "work.read",
+      "evidence.read",
+      "decision.read",
+      "audit.read",
+      "installation.read"
+    ],
+    "intentOperations": [
+      "draft.create",
+      "field-change.plan",
+      "domain-command.plan",
+      "domain-command.consent",
+      "domain-command.approve",
+      "domain-command.dispatch",
+      "domain-command.cancel",
+      "domain-command.resume",
+      "domain-command.takeover",
+      "domain-command.status"
+    ],
+    "rules": [
+      "Every response is selected by fixture ID, operation, and zero-based call index; every command dispatch and status response is additionally selected by one stable attempt ID.",
+      "Unknown operations and exhausted sequences fail closed as unsupported.",
+      "A domain command is not dispatched until the exact plan exists, blocking preconditions are satisfied, and every consent or approval named by that plan is recorded. A dual-control funding plan binds an immutable plan digest, maker, destination handle, and two separate actor/session/receipt approval operations; neither approver may be the maker or share the maker's or the other approver's session.",
+      "Cancel, resume, and takeover bind the already dispatched plan and stable attempt; resume uses an opaque handle reference with no secret material, and takeover names a higher generation.",
+      "Every domain-command.status names the previously dispatched stable attempt ID; an effected, ready, resolved, reconciled, revoked, or terminal state requires causallyVerified=true and a causalProofRef.",
+      "Every causalProofRef is the unique SHA-256 commitment to its fixture, plan, attempt, and external state; a proof reference cannot be reused for another effect or lineage.",
+      "A timeout or effect_unknown result cannot be converted into success or blindly retried.",
+      "Install recovery orders effect_unknown before partial-effect reconciliation and resume, while lifecycle decommission planning, approval, and dispatch occur only after the exact authority-revocation proof and bind its scope and generation.",
+      "Supplemental builder responses are marked supplemental and excluded from comparative scoring."
+    ]
+  },
+  "fixtures": [
+    {
+      "id": "fixture.originator-qualification",
+      "scenarioId": "originator-qualification",
+      "expectedOutcomeState": "scenario_recorded_missing_evidence_requested_no_loan_write",
+      "requiredCausalOutcomeStates": [
+        "missing_evidence_request_created"
+      ],
+      "input": {
+        "annualIncome": "108000.00",
+        "monthlyDebt": "1450.00",
+        "liquidAssets": "78000.00",
+        "price": "420000.00",
+        "structures": [
+          {
+            "id": "structure-a",
+            "loanAmount": "360000.00",
+            "downPayment": "60000.00",
+            "proposedHousing": "2100.00",
+            "estimatedFees": [
+              "1800.00",
+              "625.00"
+            ]
+          },
+          {
+            "id": "structure-b",
+            "loanAmount": "340000.00",
+            "downPayment": "80000.00",
+            "proposedHousing": "1985.00",
+            "estimatedFees": [
+              "1800.00",
+              "575.00"
+            ]
+          }
+        ],
+        "missingInputs": [
+          "insurance_estimate",
+          "current_income_statement"
+        ]
+      },
+      "mockSequence": [
+        {
+          "operation": "work.read",
+          "result": "partial",
+          "missing": [
+            "insurance_estimate",
+            "current_income_statement"
+          ]
+        },
+        {
+          "operation": "decision.read",
+          "result": "comparison_ready_with_assumptions"
+        },
+        {
+          "operation": "draft.create",
+          "result": "scenario_draft_no_external_effect"
+        },
+        {
+          "operation": "domain-command.plan",
+          "planId": "plan.evidence-request-01",
+          "result": "borrower_evidence_request_planned"
+        },
+        {
+          "operation": "domain-command.dispatch",
+          "planId": "plan.evidence-request-01",
+          "attemptId": "attempt.evidence-request-01",
+          "result": "accepted"
+        },
+        {
+          "operation": "domain-command.status",
+          "planId": "plan.evidence-request-01",
+          "attemptId": "attempt.evidence-request-01",
+          "result": "causally_verified",
+          "externalState": "missing_evidence_request_created",
+          "causallyVerified": true,
+          "causalProofRef": "proof.sha256.cb9e95c0f0b0a930ad8ba5d01fb847dd22cd55a2b07570e5fa0c0c3416645f3f"
+        },
+        {
+          "operation": "work.read",
+          "result": "scenario_recorded_missing_evidence_requested_no_loan_write"
+        }
+      ],
+      "requiredAssertions": [
+        "compare-two-structures",
+        "show-assumptions-and-missing-borrower-evidence",
+        "request-missing-evidence",
+        "record-safe-scenario",
+        "no-loan-write"
+      ]
+    },
+    {
+      "id": "fixture.setup-evidence-ambiguity",
+      "scenarioId": "setup-evidence-ambiguity",
+      "expectedOutcomeState": "handoff_ready_after_all_required_evidence_resolved",
+      "requiredCausalOutcomeStates": [
+        "date_signature_classification_completeness_duplicate_supersession_and_subject_bindings_resolved"
+      ],
+      "input": {
+        "documents": [
+          {
+            "id": "document.income-statement-v1",
+            "classifiedAs": "asset_evidence",
+            "expectedKind": "income_evidence",
+            "claimedSubjectRef": "subject.borrower-01",
+            "candidateSubjectRefs": [
+              "subject.borrower-01",
+              "subject.borrower-02"
+            ],
+            "claimedEmployerRef": "subject.employer-02",
+            "candidateEmployerRefs": [
+              "subject.employer-01",
+              "subject.employer-02"
+            ],
+            "signature": "not_observed",
+            "documentDate": "2025-12-31",
+            "statedPeriodEnd": "2025-12-30",
+            "dateStatus": "mismatch"
+          },
+          {
+            "id": "document.income-statement-v1-duplicate",
+            "duplicateOf": "document.income-statement-v1",
+            "supersession": "unresolved"
+          }
+        ],
+        "reviewedResolutionEvent": {
+          "replacementDocumentRef": "document.income-statement-v2",
+          "signature": "observed",
+          "documentDate": "2025-12-30",
+          "classifiedAs": "income_evidence",
+          "selectedSubjectRef": "subject.borrower-01",
+          "selectedEmployerRef": "subject.employer-01",
+          "supersedes": [
+            "document.income-statement-v1",
+            "document.income-statement-v1-duplicate"
+          ],
+          "completeness": "complete"
+        }
+      },
+      "mockSequence": [
+        {
+          "operation": "evidence.read",
+          "result": "conflict",
+          "conflicts": [
+            "date",
+            "signature",
+            "classification",
+            "borrower_binding",
+            "employer_binding",
+            "duplicate"
+          ]
+        },
+        {
+          "operation": "work.read",
+          "result": "handoff_blocked_incomplete"
+        },
+        {
+          "operation": "domain-command.plan",
+          "planId": "plan.setup-correction-01",
+          "result": "approval_required"
+        },
+        {
+          "operation": "domain-command.approve",
+          "planId": "plan.setup-correction-01",
+          "approvalReceiptRef": "receipt.approval.setup-correction-01",
+          "result": "approved"
+        },
+        {
+          "operation": "domain-command.dispatch",
+          "planId": "plan.setup-correction-01",
+          "attemptId": "attempt.setup-correction-01",
+          "result": "accepted"
+        },
+        {
+          "operation": "domain-command.status",
+          "planId": "plan.setup-correction-01",
+          "attemptId": "attempt.setup-correction-01",
+          "result": "causally_verified",
+          "externalState": "date_signature_classification_completeness_duplicate_supersession_and_subject_bindings_resolved",
+          "causallyVerified": true,
+          "causalProofRef": "proof.sha256.0c4cfeae2aeed16e325649bc933682d1024f803388c1f40e51e248b1d29983a4"
+        },
+        {
+          "operation": "evidence.read",
+          "result": "selected_bindings_and_all_candidates_preserved_with_review_decision"
+        },
+        {
+          "operation": "work.read",
+          "result": "handoff_ready_after_all_required_evidence_resolved"
+        }
+      ],
+      "requiredAssertions": [
+        "show-date-mismatch",
+        "show-missing-signature",
+        "correct-misclassification",
+        "preserve-borrower-and-employer-candidates",
+        "resolve-duplicate-and-supersession",
+        "block-incomplete-handoff"
+      ]
+    },
+    {
+      "id": "fixture.processor-orchestration",
+      "scenarioId": "processor-orchestration",
+      "expectedOutcomeState": "supervisory_bottleneck_resolved_and_order_accepted",
+      "requiredCausalOutcomeStates": [
+        "supervisory_bottleneck_resolved_and_order_accepted"
+      ],
+      "input": {
+        "tasks": [
+          {
+            "id": "task.verification-01",
+            "kind": "verification",
+            "dueAt": "2026-01-15T17:00:00Z",
+            "ownerRole": "processor",
+            "dependency": "consent-01"
+          },
+          {
+            "id": "task.service-order-01",
+            "kind": "service_order",
+            "dueAt": "2026-01-15T18:00:00Z",
+            "ownerRole": "processor",
+            "dependency": "verification-01"
+          },
+          {
+            "id": "task.appraisal-01",
+            "kind": "appraisal",
+            "dueAt": "2026-01-16T15:00:00Z",
+            "ownerRole": "processor",
+            "dependency": "external-order-01"
+          },
+          {
+            "id": "task.document-01",
+            "kind": "missing_document",
+            "dueAt": "2026-01-15T16:00:00Z",
+            "ownerRole": "processor",
+            "dependency": "borrower-response-01"
+          }
+        ],
+        "conditions": [
+          {
+            "id": "condition-processor-01",
+            "status": "open",
+            "dependency": "document.income-statement-v1"
+          }
+        ],
+        "managerBottleneck": {
+          "id": "bottleneck-01",
+          "reason": "blocked_external_response",
+          "minimizedFields": [
+            "taskId",
+            "dueAt",
+            "dependency",
+            "status"
+          ]
+        }
+      },
+      "mockSequence": [
+        {
+          "operation": "task.list",
+          "result": "dependency_ordered"
+        },
+        {
+          "operation": "work.read",
+          "result": "manager_bottleneck_visible_with_minimized_fields"
+        },
+        {
+          "operation": "domain-command.plan",
+          "planId": "plan.order-01",
+          "result": "consent_and_approval_required"
+        },
+        {
+          "operation": "domain-command.consent",
+          "planId": "plan.order-01",
+          "consentReceiptRef": "receipt.consent.order-01",
+          "result": "consent_recorded"
+        },
+        {
+          "operation": "domain-command.approve",
+          "planId": "plan.order-01",
+          "approvalReceiptRef": "receipt.approval.order-01",
+          "result": "approved"
+        },
+        {
+          "operation": "domain-command.dispatch",
+          "planId": "plan.order-01",
+          "attemptId": "attempt.order-01",
+          "result": "timeout_after_acceptance"
+        },
+        {
+          "operation": "domain-command.status",
+          "planId": "plan.order-01",
+          "attemptId": "attempt.order-01",
+          "result": "effect_unknown",
+          "causallyVerified": false
+        },
+        {
+          "operation": "domain-command.status",
+          "planId": "plan.order-01",
+          "attemptId": "attempt.order-01",
+          "result": "causally_verified",
+          "externalState": "supervisory_bottleneck_resolved_and_order_accepted",
+          "causallyVerified": true,
+          "causalProofRef": "proof.sha256.72a7d04be6600e0d87334d4f74e55f09fe87b65c61b1d4ff738661be95fdfd7f"
+        }
+      ],
+      "requiredAssertions": [
+        "coordinate-verification-service-appraisal-documents-and-conditions",
+        "prioritize-by-dependency-and-deadline",
+        "show-supervisor-with-minimized-data",
+        "resolve-supervisory-bottleneck",
+        "hold-until-causal-verification"
+      ]
+    },
+    {
+      "id": "fixture.underwriter-adjudication",
+      "scenarioId": "underwriter-adjudication",
+      "expectedOutcomeState": "evidence_bound_conditions_issued",
+      "requiredCausalOutcomeStates": [
+        "income_assets_liability_and_collateral_adjudicated",
+        "evidence_bound_conditions_issued"
+      ],
+      "input": {
+        "incomeRail": {
+          "served": "9250.00",
+          "adapted": "9250.00",
+          "joined": "no_answer",
+          "computed": "no_answer",
+          "firstBrokenStage": "joined",
+          "joinReason": "employer_alias_negative_match"
+        },
+        "incomeMethods": [
+          {
+            "id": "method-engine",
+            "amount": "9250.00",
+            "sourceYear": 2025,
+            "status": "candidate"
+          },
+          {
+            "id": "method-independent",
+            "amount": "9100.00",
+            "sourceYear": 2024,
+            "status": "candidate"
+          }
+        ],
+        "sourceYearConflict": {
+          "available": [
+            2024,
+            2025
+          ],
+          "selected": "review_required"
+        },
+        "largeDeposit": {
+          "amount": "26500.00",
+          "observedAt": "2025-12-18",
+          "sourceEvidence": "not_observed",
+          "status": "review_required"
+        },
+        "liability": {
+          "payment": "unknown",
+          "ownership": "conflict"
+        },
+        "collateral": {
+          "value": "405000.00",
+          "freshness": "stale",
+          "exception": "review"
+        },
+        "reviewedAdjudicationEvent": {
+          "incomeMethod": "method-independent",
+          "incomeMethodTreatment": "reviewed_not_ground_truth",
+          "sourceYear": 2024,
+          "largeDeposit": "condition_required",
+          "liability": "ownership_resolved_payment_condition_required",
+          "collateral": "exception_condition_required"
+        }
+      },
+      "mockSequence": [
+        {
+          "operation": "evidence.read",
+          "result": "conflict",
+          "conflicts": [
+            "income_method",
+            "source_year",
+            "large_deposit",
+            "liability",
+            "collateral"
+          ]
+        },
+        {
+          "operation": "decision.read",
+          "result": "needs_review"
+        },
+        {
+          "operation": "domain-command.plan",
+          "planId": "plan.adjudication-01",
+          "result": "approval_required"
+        },
+        {
+          "operation": "domain-command.approve",
+          "planId": "plan.adjudication-01",
+          "approvalReceiptRef": "receipt.approval.adjudication-01",
+          "approverRoleIds": [
+            "collateral",
+            "quality-control"
+          ],
+          "result": "approved"
+        },
+        {
+          "operation": "domain-command.dispatch",
+          "planId": "plan.adjudication-01",
+          "attemptId": "attempt.adjudication-01",
+          "result": "accepted"
+        },
+        {
+          "operation": "domain-command.status",
+          "planId": "plan.adjudication-01",
+          "attemptId": "attempt.adjudication-01",
+          "result": "causally_verified",
+          "externalState": "income_assets_liability_and_collateral_adjudicated",
+          "causallyVerified": true,
+          "causalProofRef": "proof.sha256.d7316a31414be99a652c6f194b0079d4ab355912bba233288f1cdc04d52aedb5"
+        },
+        {
+          "operation": "decision.read",
+          "result": "adjudicated_with_evidence_bound_treatments"
+        },
+        {
+          "operation": "domain-command.plan",
+          "planId": "plan.conditions-01",
+          "result": "conditions_from_adjudication_planned"
+        },
+        {
+          "operation": "domain-command.dispatch",
+          "planId": "plan.conditions-01",
+          "attemptId": "attempt.conditions-01",
+          "result": "accepted"
+        },
+        {
+          "operation": "domain-command.status",
+          "planId": "plan.conditions-01",
+          "attemptId": "attempt.conditions-01",
+          "result": "causally_verified",
+          "externalState": "evidence_bound_conditions_issued",
+          "causallyVerified": true,
+          "causalProofRef": "proof.sha256.984b03930aaca0a4100227fc5957ea3d02155aad6696a4c636c4a27da3a6c4f9"
+        }
+      ],
+      "requiredAssertions": [
+        "no-answer-is-not-zero",
+        "first-broken-stage-visible",
+        "negative-entity-match-preserved",
+        "compare-income-methods-and-source-years",
+        "large-deposit-evidence-required",
+        "independent-method-not-ground-truth",
+        "issue-evidence-bound-conditions"
+      ]
+    },
+    {
+      "id": "fixture.compliance-fee-timing",
+      "scenarioId": "compliance-fee-timing",
+      "expectedOutcomeState": "closing_alert_created",
+      "requiredCausalOutcomeStates": [
+        "closing_alert_created"
+      ],
+      "input": {
+        "eventAt": "2026-01-12T18:00:00Z",
+        "feeBefore": "625.00",
+        "feeAfter": "925.00",
+        "feeDelta": "300.00",
+        "permittedTolerance": "150.00",
+        "noticeDueAt": "2026-01-09T23:59:59Z",
+        "noticeObservedAt": "2026-01-10T14:00:00Z",
+        "authorityVersion": "public-authority.synthetic-2026-01",
+        "effectiveAt": "2026-01-01T00:00:00Z",
+        "applicabilityInputInitially": "unknown",
+        "applicabilityInputResolved": "applicable",
+        "customerOverlay": "overlay.synthetic-01"
+      },
+      "mockSequence": [
+        {
+          "operation": "decision.read",
+          "result": "not_evaluated_missing_input"
+        },
+        {
+          "operation": "decision.read",
+          "result": "violation",
+          "issues": [
+            "fee_tolerance",
+            "timing"
+          ]
+        },
+        {
+          "operation": "draft.create",
+          "result": "cure_proposed_no_external_effect"
+        },
+        {
+          "operation": "domain-command.plan",
+          "planId": "plan.alert-01",
+          "result": "planned"
+        },
+        {
+          "operation": "domain-command.dispatch",
+          "planId": "plan.alert-01",
+          "attemptId": "attempt.alert-01",
+          "result": "accepted"
+        },
+        {
+          "operation": "domain-command.status",
+          "planId": "plan.alert-01",
+          "attemptId": "attempt.alert-01",
+          "result": "causally_verified",
+          "externalState": "closing_alert_created",
+          "causallyVerified": true,
+          "causalProofRef": "proof.sha256.0223c7572bda6f4b3f96a54259e6453d8825ee346959070812578a97c11bf09d"
+        }
+      ],
+      "requiredAssertions": [
+        "source-result-separate-from-customer-policy",
+        "unknown-not-pass",
+        "effective-version-and-inputs-visible",
+        "identify-fee-and-timing-problem",
+        "route-material-alert-to-closing"
+      ]
+    },
+    {
+      "id": "fixture.closing-change-readiness",
+      "scenarioId": "closing-change-readiness",
+      "expectedOutcomeState": "closing_ready_after_fee_cash_document_timing_reconciliation",
+      "requiredCausalOutcomeStates": [
+        "fee_cash_to_close_documents_and_timing_readiness_reconciled",
+        "funding_handoff_rebuilt_from_reconciled_closing_version"
+      ],
+      "input": {
+        "feeVersion": 2,
+        "feeBefore": "1200.00",
+        "feeAfter": "1680.00",
+        "cashToCloseBefore": "54120.00",
+        "cashToCloseAfter": "54600.00",
+        "closingStateVersion": 2,
+        "closingReconciliationDigest": "302682836ac640e1a7c3d233bb473394e7658c621dd9b37cc12f1a4f6a7ef062",
+        "closingReconciliationProofRef": "proof.sha256.9993e1fc0f8522cfb04f54d1e9c7d3117bbe245c34d3c7711eb8c25ff7bf9051",
+        "documentVersionPrepared": 1,
+        "documentVersionRequired": 2,
+        "approval": "required",
+        "scheduledAt": "2026-01-19T16:00:00Z",
+        "priorFundingHandoffVersion": 1,
+        "newFundingHandoffVersion": 2,
+        "fundingHandoffDigest": "3186803672beee5f74477a163797e961a92df2980238e8ece0674d05f08c5016"
+      },
+      "mockSequence": [
+        {
+          "operation": "work.read",
+          "result": "blocked_dependency"
+        },
+        {
+          "operation": "domain-command.plan",
+          "planId": "plan.rebuild-01",
+          "closingStateVersion": 2,
+          "closingReconciliationDigest": "302682836ac640e1a7c3d233bb473394e7658c621dd9b37cc12f1a4f6a7ef062",
+          "result": "closing_reconciliation_approval_required"
+        },
+        {
+          "operation": "domain-command.approve",
+          "planId": "plan.rebuild-01",
+          "closingStateVersion": 2,
+          "closingReconciliationDigest": "302682836ac640e1a7c3d233bb473394e7658c621dd9b37cc12f1a4f6a7ef062",
+          "approvalReceiptRef": "receipt.approval.rebuild-01",
+          "result": "approved"
+        },
+        {
+          "operation": "domain-command.dispatch",
+          "planId": "plan.rebuild-01",
+          "attemptId": "attempt.rebuild-01",
+          "closingStateVersion": 2,
+          "closingReconciliationDigest": "302682836ac640e1a7c3d233bb473394e7658c621dd9b37cc12f1a4f6a7ef062",
+          "result": "accepted"
+        },
+        {
+          "operation": "domain-command.status",
+          "planId": "plan.rebuild-01",
+          "attemptId": "attempt.rebuild-01",
+          "closingStateVersion": 2,
+          "closingReconciliationDigest": "302682836ac640e1a7c3d233bb473394e7658c621dd9b37cc12f1a4f6a7ef062",
+          "result": "causally_verified",
+          "externalState": "fee_cash_to_close_documents_and_timing_readiness_reconciled",
+          "causallyVerified": true,
+          "causalProofRef": "proof.sha256.9993e1fc0f8522cfb04f54d1e9c7d3117bbe245c34d3c7711eb8c25ff7bf9051"
+        },
+        {
+          "operation": "domain-command.plan",
+          "planId": "plan.funding-handoff-rebuild-01",
+          "tenantId": "tenant.synthetic-01",
+          "loanId": "loan.synthetic-001",
+          "sourceClosingVersion": 2,
+          "sourceClosingReconciliationDigest": "302682836ac640e1a7c3d233bb473394e7658c621dd9b37cc12f1a4f6a7ef062",
+          "sourceCausalProofRef": "proof.sha256.9993e1fc0f8522cfb04f54d1e9c7d3117bbe245c34d3c7711eb8c25ff7bf9051",
+          "priorFundingHandoffVersion": 1,
+          "newFundingHandoffVersion": 2,
+          "fundingHandoffDigest": "3186803672beee5f74477a163797e961a92df2980238e8ece0674d05f08c5016",
+          "result": "funding_handoff_rebuild_planned_from_reconciled_closing_version"
+        },
+        {
+          "operation": "domain-command.dispatch",
+          "planId": "plan.funding-handoff-rebuild-01",
+          "attemptId": "attempt.funding-handoff-rebuild-01",
+          "sourceClosingVersion": 2,
+          "sourceClosingReconciliationDigest": "302682836ac640e1a7c3d233bb473394e7658c621dd9b37cc12f1a4f6a7ef062",
+          "sourceCausalProofRef": "proof.sha256.9993e1fc0f8522cfb04f54d1e9c7d3117bbe245c34d3c7711eb8c25ff7bf9051",
+          "priorFundingHandoffVersion": 1,
+          "newFundingHandoffVersion": 2,
+          "fundingHandoffDigest": "3186803672beee5f74477a163797e961a92df2980238e8ece0674d05f08c5016",
+          "result": "accepted"
+        },
+        {
+          "operation": "domain-command.status",
+          "planId": "plan.funding-handoff-rebuild-01",
+          "attemptId": "attempt.funding-handoff-rebuild-01",
+          "sourceClosingVersion": 2,
+          "sourceClosingReconciliationDigest": "302682836ac640e1a7c3d233bb473394e7658c621dd9b37cc12f1a4f6a7ef062",
+          "sourceCausalProofRef": "proof.sha256.9993e1fc0f8522cfb04f54d1e9c7d3117bbe245c34d3c7711eb8c25ff7bf9051",
+          "priorFundingHandoffVersion": 1,
+          "newFundingHandoffVersion": 2,
+          "fundingHandoffDigest": "3186803672beee5f74477a163797e961a92df2980238e8ece0674d05f08c5016",
+          "result": "causally_verified",
+          "externalState": "funding_handoff_rebuilt_from_reconciled_closing_version",
+          "causallyVerified": true,
+          "causalProofRef": "proof.sha256.fa0d63abe0116ffe9b9d19fd32cd67e24d0e7a3db8163657ae4189902db92f46"
+        },
+        {
+          "operation": "work.read",
+          "closingStateVersion": 2,
+          "closingReconciliationDigest": "302682836ac640e1a7c3d233bb473394e7658c621dd9b37cc12f1a4f6a7ef062",
+          "closingReconciliationProofRef": "proof.sha256.9993e1fc0f8522cfb04f54d1e9c7d3117bbe245c34d3c7711eb8c25ff7bf9051",
+          "fundingHandoffVersion": 2,
+          "fundingHandoffDigest": "3186803672beee5f74477a163797e961a92df2980238e8ece0674d05f08c5016",
+          "result": "closing_ready_after_fee_cash_document_timing_reconciliation"
+        }
+      ],
+      "requiredAssertions": [
+        "show-fee-and-document-version-impact",
+        "reconcile-fee-and-cash-to-close",
+        "rebuild-funding-handoff",
+        "do-not-present-ready-before-rebuild",
+        "confirm-document-and-timing-readiness-after-rebuild"
+      ]
+    },
+    {
+      "id": "fixture.funding-effect-unknown",
+      "scenarioId": "funding-effect-unknown",
+      "expectedOutcomeState": "causally_verified_not_executed_after_effect_unknown_hold",
+      "requiredCausalOutcomeStates": [
+        "causally_verified_not_executed_after_effect_unknown_hold"
+      ],
+      "input": {
+        "conditions": [
+          {
+            "id": "condition-01",
+            "status": "unsatisfied"
+          }
+        ],
+        "conditionResolutionEvent": "synthetic_evidence_arrival_before_second_read",
+        "conditionResolutionEvidence": {
+          "conditionId": "condition-01",
+          "eventId": "event.synthetic-funding-condition-01",
+          "resultingStatus": "satisfied",
+          "sourceRef": "evidence.synthetic-funding-condition-01",
+          "version": 1
+        },
+        "preconditionSnapshotDigest": "0de0f9789138f5937bd03fcfc3bed64d1831252e05e7a155c5848fb1c3f1c8ba",
+        "planId": "plan.disbursement-01",
+        "planVersion": 1,
+        "plannedAt": "2026-01-15T15:00:00Z",
+        "expiresAt": "2026-01-15T16:00:00Z",
+        "dispatchObservedAt": "2026-01-15T15:03:00Z",
+        "amount": "358742.18",
+        "currency": "USD",
+        "sourceHandleRef": "handle.disbursement-source-01",
+        "destinationHandleRef": "handle.disbursement-destination-01",
+        "evidenceReceiptRefs": [
+          "evidence.synthetic-funding-condition-01:v1"
+        ],
+        "authorityCapabilityVersion": "funding-disbursement:v1",
+        "correlationId": "correlation.disbursement-01",
+        "idempotencyKey": "idempotency.disbursement-01",
+        "maker": {
+          "actorId": "actor.funding-maker-01",
+          "roleLensId": "funding",
+          "sessionId": "session.funding-maker-01"
+        },
+        "approval": "dual_approval",
+        "approvalActors": [
+          {
+            "actorId": "actor.funding-control-a",
+            "roleLensId": "funding-control-approver",
+            "sessionId": "session.funding-control-a"
+          },
+          {
+            "actorId": "actor.funding-control-b",
+            "roleLensId": "funding-control-approver",
+            "sessionId": "session.funding-control-b"
+          }
+        ],
+        "approvalDecidedAt": [
+          "2026-01-15T15:01:00Z",
+          "2026-01-15T15:02:00Z"
+        ],
+        "approvalPolicyDigest": "e916bce63340782ec3bb1395f1405fdb26eb99bb74db9f923aa4d7db39a33375",
+        "requiredFundingDenials": [
+          "maker_cannot_approve",
+          "actor_reuse",
+          "session_reuse",
+          "receipt_reuse",
+          "stale_plan",
+          "destination_mutation"
+        ],
+        "planDigest": "5bb8b181d86413b031b8cca9ef3dc0516ad47e9d317696a36ad770c6080f43c4",
+        "attemptId": "attempt.disbursement-01"
+      },
+      "mockSequence": [
+        {
+          "operation": "domain-command.plan",
+          "planId": "plan.expiry-before-approval-01",
+          "plannedAt": "2026-01-15T14:58:00Z",
+          "expiresAt": "2026-01-15T14:59:00Z",
+          "expiryFailure": "expired_before_approval",
+          "authorizationCore": "funding.disbursement-full-v1",
+          "planDigest": "49b5c045e6bdadec2f0059659101333916a8ab3780dc7fe50ff9fecb1e63041d",
+          "result": "expiry_denial_probe_planned"
+        },
+        {
+          "operation": "domain-command.approve",
+          "planId": "plan.expiry-before-approval-01",
+          "planDigest": "49b5c045e6bdadec2f0059659101333916a8ab3780dc7fe50ff9fecb1e63041d",
+          "actorId": "actor.funding-control-a",
+          "roleLensId": "funding-control-approver",
+          "sessionId": "session.funding-control-a",
+          "approvalReceiptRef": "receipt.denied.expired-before-approval",
+          "observedAt": "2026-01-15T15:00:00Z",
+          "controlFailure": "expired_before_approval",
+          "result": "rejected_expired_before_approval"
+        },
+        {
+          "operation": "domain-command.plan",
+          "planId": "plan.expiry-between-approvals-01",
+          "plannedAt": "2026-01-15T15:00:00Z",
+          "expiresAt": "2026-01-15T15:01:30Z",
+          "expiryFailure": "expired_between_approvals",
+          "authorizationCore": "funding.disbursement-full-v1",
+          "planDigest": "604e47630423b3f396d264528255e1ac0a08e398d8f824b8fdf443f6fba627d4",
+          "result": "expiry_denial_probe_planned"
+        },
+        {
+          "operation": "domain-command.approve",
+          "planId": "plan.expiry-between-approvals-01",
+          "planDigest": "604e47630423b3f396d264528255e1ac0a08e398d8f824b8fdf443f6fba627d4",
+          "actorId": "actor.funding-control-a",
+          "roleLensId": "funding-control-approver",
+          "sessionId": "session.funding-control-a",
+          "approvalReceiptRef": "receipt.expiry-between-first",
+          "observedAt": "2026-01-15T15:01:00Z",
+          "result": "approval_recorded_awaiting_second_independent_approver"
+        },
+        {
+          "operation": "domain-command.approve",
+          "planId": "plan.expiry-between-approvals-01",
+          "planDigest": "604e47630423b3f396d264528255e1ac0a08e398d8f824b8fdf443f6fba627d4",
+          "actorId": "actor.funding-control-b",
+          "roleLensId": "funding-control-approver",
+          "sessionId": "session.funding-control-b",
+          "approvalReceiptRef": "receipt.denied.expired-between-approvals",
+          "observedAt": "2026-01-15T15:02:00Z",
+          "controlFailure": "expired_between_approvals",
+          "result": "rejected_expired_between_approvals"
+        },
+        {
+          "operation": "domain-command.plan",
+          "planId": "plan.expiry-before-dispatch-01",
+          "plannedAt": "2026-01-15T15:00:00Z",
+          "expiresAt": "2026-01-15T15:02:30Z",
+          "expiryFailure": "expired_before_dispatch",
+          "authorizationCore": "funding.disbursement-full-v1",
+          "planDigest": "bca6a37bcce9015cb21d23a73ff7d42f5340f0bb1633e1cd211299f46fe1ab69",
+          "result": "expiry_denial_probe_planned"
+        },
+        {
+          "operation": "domain-command.approve",
+          "planId": "plan.expiry-before-dispatch-01",
+          "planDigest": "bca6a37bcce9015cb21d23a73ff7d42f5340f0bb1633e1cd211299f46fe1ab69",
+          "actorId": "actor.funding-control-a",
+          "roleLensId": "funding-control-approver",
+          "sessionId": "session.funding-control-a",
+          "approvalReceiptRef": "receipt.expiry-dispatch-first",
+          "observedAt": "2026-01-15T15:01:00Z",
+          "result": "approval_recorded_awaiting_second_independent_approver"
+        },
+        {
+          "operation": "domain-command.approve",
+          "planId": "plan.expiry-before-dispatch-01",
+          "planDigest": "bca6a37bcce9015cb21d23a73ff7d42f5340f0bb1633e1cd211299f46fe1ab69",
+          "actorId": "actor.funding-control-b",
+          "roleLensId": "funding-control-approver",
+          "sessionId": "session.funding-control-b",
+          "approvalReceiptRef": "receipt.expiry-dispatch-second",
+          "observedAt": "2026-01-15T15:02:00Z",
+          "result": "dual_approval_recorded"
+        },
+        {
+          "operation": "domain-command.dispatch",
+          "planId": "plan.expiry-before-dispatch-01",
+          "planDigest": "bca6a37bcce9015cb21d23a73ff7d42f5340f0bb1633e1cd211299f46fe1ab69",
+          "approvalReceiptRefs": [
+            "receipt.expiry-dispatch-first",
+            "receipt.expiry-dispatch-second"
+          ],
+          "attemptId": "attempt.denied.expired-before-dispatch",
+          "observedAt": "2026-01-15T15:03:00Z",
+          "controlFailure": "expired_before_dispatch",
+          "result": "rejected_expired_before_dispatch"
+        },
+        {
+          "operation": "work.read",
+          "result": "blocked_unsatisfied_condition"
+        },
+        {
+          "operation": "evidence.read",
+          "conditionId": "condition-01",
+          "eventId": "event.synthetic-funding-condition-01",
+          "resultingStatus": "satisfied",
+          "sourceRef": "evidence.synthetic-funding-condition-01",
+          "version": 1,
+          "preconditionSnapshotDigest": "0de0f9789138f5937bd03fcfc3bed64d1831252e05e7a155c5848fb1c3f1c8ba",
+          "result": "condition_evidence_observed_from_fixture_event"
+        },
+        {
+          "operation": "work.read",
+          "preconditionSnapshotDigest": "0de0f9789138f5937bd03fcfc3bed64d1831252e05e7a155c5848fb1c3f1c8ba",
+          "result": "preconditions_satisfied"
+        },
+        {
+          "operation": "domain-command.plan",
+          "schemaVersion": "1.0.0",
+          "commandKind": "funding.disbursement",
+          "tenantId": "tenant.synthetic-01",
+          "loanId": "loan.synthetic-001",
+          "planId": "plan.disbursement-01",
+          "planVersion": 1,
+          "plannedAt": "2026-01-15T15:00:00Z",
+          "expiresAt": "2026-01-15T16:00:00Z",
+          "makerActorId": "actor.funding-maker-01",
+          "makerRoleId": "funding",
+          "makerSessionId": "session.funding-maker-01",
+          "amount": "358742.18",
+          "currency": "USD",
+          "sourceHandleRef": "handle.disbursement-source-01",
+          "destinationHandleRef": "handle.disbursement-destination-01",
+          "preconditionSnapshotDigest": "0de0f9789138f5937bd03fcfc3bed64d1831252e05e7a155c5848fb1c3f1c8ba",
+          "conditionIds": [
+            "condition-01"
+          ],
+          "evidenceReceiptRefs": [
+            "evidence.synthetic-funding-condition-01:v1"
+          ],
+          "approvalPolicyDigest": "e916bce63340782ec3bb1395f1405fdb26eb99bb74db9f923aa4d7db39a33375",
+          "approvalCardinality": 2,
+          "expectedApproverActorIds": [
+            "actor.funding-control-a",
+            "actor.funding-control-b"
+          ],
+          "expectedApproverRoleIds": [
+            "funding-control-approver",
+            "funding-control-approver"
+          ],
+          "authorityCapabilityVersion": "funding-disbursement:v1",
+          "correlationId": "correlation.disbursement-01",
+          "idempotencyKey": "idempotency.disbursement-01",
+          "planDigest": "5bb8b181d86413b031b8cca9ef3dc0516ad47e9d317696a36ad770c6080f43c4",
+          "result": "dual_approval_required"
+        },
+        {
+          "operation": "domain-command.approve",
+          "planId": "plan.disbursement-01",
+          "planDigest": "5bb8b181d86413b031b8cca9ef3dc0516ad47e9d317696a36ad770c6080f43c4",
+          "preconditionSnapshotDigest": "0de0f9789138f5937bd03fcfc3bed64d1831252e05e7a155c5848fb1c3f1c8ba",
+          "approvalPolicyDigest": "e916bce63340782ec3bb1395f1405fdb26eb99bb74db9f923aa4d7db39a33375",
+          "destinationHandleRef": "handle.disbursement-destination-01",
+          "actorId": "actor.funding-maker-01",
+          "roleLensId": "funding",
+          "sessionId": "session.funding-maker-01",
+          "approvalReceiptRef": "receipt.denied.disbursement-maker",
+          "observedApprovalReceiptRefs": [],
+          "observedApprovalReceiptDigests": [],
+          "controlFailure": "maker_cannot_approve",
+          "result": "rejected_maker_cannot_approve"
+        },
+        {
+          "operation": "domain-command.approve",
+          "planId": "plan.disbursement-01",
+          "planDigest": "5bb8b181d86413b031b8cca9ef3dc0516ad47e9d317696a36ad770c6080f43c4",
+          "preconditionSnapshotDigest": "0de0f9789138f5937bd03fcfc3bed64d1831252e05e7a155c5848fb1c3f1c8ba",
+          "approvalPolicyDigest": "e916bce63340782ec3bb1395f1405fdb26eb99bb74db9f923aa4d7db39a33375",
+          "destinationHandleRef": "handle.disbursement-destination-01",
+          "actorId": "actor.funding-control-a",
+          "roleLensId": "funding-control-approver",
+          "sessionId": "session.funding-control-a",
+          "decision": "approve",
+          "decidedAt": "2026-01-15T15:01:00Z",
+          "receiptSequence": 1,
+          "approvalReceiptRef": "receipt.approval.disbursement-a",
+          "approvalReceiptDigest": "af0b6b5b5a9f47b382134593d5ff8c5bd0a95e798d5408e0102a0ac6881cd432",
+          "observedApprovalReceiptRefs": [],
+          "observedApprovalReceiptDigests": [],
+          "result": "approval_recorded_awaiting_second_independent_approver"
+        },
+        {
+          "operation": "domain-command.dispatch",
+          "planId": "plan.disbursement-01",
+          "planDigest": "5bb8b181d86413b031b8cca9ef3dc0516ad47e9d317696a36ad770c6080f43c4",
+          "preconditionSnapshotDigest": "0de0f9789138f5937bd03fcfc3bed64d1831252e05e7a155c5848fb1c3f1c8ba",
+          "approvalPolicyDigest": "e916bce63340782ec3bb1395f1405fdb26eb99bb74db9f923aa4d7db39a33375",
+          "sourceHandleRef": "handle.disbursement-source-01",
+          "destinationHandleRef": "handle.disbursement-destination-01",
+          "approvalReceiptDigests": [
+            "af0b6b5b5a9f47b382134593d5ff8c5bd0a95e798d5408e0102a0ac6881cd432"
+          ],
+          "attemptId": "attempt.denied.insufficient-approvals-01",
+          "controlFailure": "insufficient_approvals",
+          "result": "rejected_insufficient_approvals"
+        },
+        {
+          "operation": "domain-command.approve",
+          "planId": "plan.disbursement-01",
+          "planDigest": "5bb8b181d86413b031b8cca9ef3dc0516ad47e9d317696a36ad770c6080f43c4",
+          "preconditionSnapshotDigest": "0de0f9789138f5937bd03fcfc3bed64d1831252e05e7a155c5848fb1c3f1c8ba",
+          "approvalPolicyDigest": "e916bce63340782ec3bb1395f1405fdb26eb99bb74db9f923aa4d7db39a33375",
+          "destinationHandleRef": "handle.disbursement-destination-01",
+          "actorId": "actor.funding-control-a",
+          "roleLensId": "funding-control-approver",
+          "sessionId": "session.funding-control-a-alternate",
+          "approvalReceiptRef": "receipt.denied.disbursement-actor-reuse",
+          "observedApprovalReceiptRefs": [
+            "receipt.approval.disbursement-a"
+          ],
+          "observedApprovalReceiptDigests": [
+            "af0b6b5b5a9f47b382134593d5ff8c5bd0a95e798d5408e0102a0ac6881cd432"
+          ],
+          "controlFailure": "actor_reuse",
+          "result": "rejected_actor_reuse"
+        },
+        {
+          "operation": "domain-command.approve",
+          "planId": "plan.disbursement-01",
+          "planDigest": "5bb8b181d86413b031b8cca9ef3dc0516ad47e9d317696a36ad770c6080f43c4",
+          "preconditionSnapshotDigest": "0de0f9789138f5937bd03fcfc3bed64d1831252e05e7a155c5848fb1c3f1c8ba",
+          "approvalPolicyDigest": "e916bce63340782ec3bb1395f1405fdb26eb99bb74db9f923aa4d7db39a33375",
+          "destinationHandleRef": "handle.disbursement-destination-01",
+          "actorId": "actor.funding-control-b",
+          "roleLensId": "funding-control-approver",
+          "sessionId": "session.funding-control-a",
+          "approvalReceiptRef": "receipt.denied.disbursement-session-reuse",
+          "observedApprovalReceiptRefs": [
+            "receipt.approval.disbursement-a"
+          ],
+          "observedApprovalReceiptDigests": [
+            "af0b6b5b5a9f47b382134593d5ff8c5bd0a95e798d5408e0102a0ac6881cd432"
+          ],
+          "controlFailure": "session_reuse",
+          "result": "rejected_session_reuse"
+        },
+        {
+          "operation": "domain-command.approve",
+          "planId": "plan.disbursement-01",
+          "planDigest": "5bb8b181d86413b031b8cca9ef3dc0516ad47e9d317696a36ad770c6080f43c4",
+          "preconditionSnapshotDigest": "0de0f9789138f5937bd03fcfc3bed64d1831252e05e7a155c5848fb1c3f1c8ba",
+          "approvalPolicyDigest": "e916bce63340782ec3bb1395f1405fdb26eb99bb74db9f923aa4d7db39a33375",
+          "destinationHandleRef": "handle.disbursement-destination-01",
+          "actorId": "actor.funding-control-b",
+          "roleLensId": "funding-control-approver",
+          "sessionId": "session.funding-control-b",
+          "approvalReceiptRef": "receipt.approval.disbursement-a",
+          "observedApprovalReceiptRefs": [
+            "receipt.approval.disbursement-a"
+          ],
+          "observedApprovalReceiptDigests": [
+            "af0b6b5b5a9f47b382134593d5ff8c5bd0a95e798d5408e0102a0ac6881cd432"
+          ],
+          "controlFailure": "receipt_reuse",
+          "result": "rejected_receipt_reuse"
+        },
+        {
+          "operation": "domain-command.approve",
+          "planId": "plan.disbursement-01",
+          "planDigest": "0000000000000000000000000000000000000000000000000000000000000000",
+          "preconditionSnapshotDigest": "0de0f9789138f5937bd03fcfc3bed64d1831252e05e7a155c5848fb1c3f1c8ba",
+          "approvalPolicyDigest": "e916bce63340782ec3bb1395f1405fdb26eb99bb74db9f923aa4d7db39a33375",
+          "destinationHandleRef": "handle.disbursement-destination-01",
+          "actorId": "actor.funding-control-b",
+          "roleLensId": "funding-control-approver",
+          "sessionId": "session.funding-control-b",
+          "approvalReceiptRef": "receipt.denied.disbursement-stale-plan",
+          "observedApprovalReceiptRefs": [
+            "receipt.approval.disbursement-a"
+          ],
+          "observedApprovalReceiptDigests": [
+            "af0b6b5b5a9f47b382134593d5ff8c5bd0a95e798d5408e0102a0ac6881cd432"
+          ],
+          "controlFailure": "stale_plan",
+          "result": "rejected_stale_plan"
+        },
+        {
+          "operation": "domain-command.approve",
+          "planId": "plan.disbursement-01",
+          "planDigest": "5bb8b181d86413b031b8cca9ef3dc0516ad47e9d317696a36ad770c6080f43c4",
+          "preconditionSnapshotDigest": "0de0f9789138f5937bd03fcfc3bed64d1831252e05e7a155c5848fb1c3f1c8ba",
+          "approvalPolicyDigest": "e916bce63340782ec3bb1395f1405fdb26eb99bb74db9f923aa4d7db39a33375",
+          "destinationHandleRef": "handle.changed-destination",
+          "actorId": "actor.funding-control-b",
+          "roleLensId": "funding-control-approver",
+          "sessionId": "session.funding-control-b",
+          "approvalReceiptRef": "receipt.denied.disbursement-destination-mutation",
+          "observedApprovalReceiptRefs": [
+            "receipt.approval.disbursement-a"
+          ],
+          "observedApprovalReceiptDigests": [
+            "af0b6b5b5a9f47b382134593d5ff8c5bd0a95e798d5408e0102a0ac6881cd432"
+          ],
+          "controlFailure": "destination_mutation",
+          "result": "rejected_destination_mutation"
+        },
+        {
+          "operation": "domain-command.approve",
+          "planId": "plan.disbursement-01",
+          "planDigest": "5bb8b181d86413b031b8cca9ef3dc0516ad47e9d317696a36ad770c6080f43c4",
+          "preconditionSnapshotDigest": "0de0f9789138f5937bd03fcfc3bed64d1831252e05e7a155c5848fb1c3f1c8ba",
+          "approvalPolicyDigest": "e916bce63340782ec3bb1395f1405fdb26eb99bb74db9f923aa4d7db39a33375",
+          "destinationHandleRef": "handle.disbursement-destination-01",
+          "actorId": "actor.funding-control-b",
+          "roleLensId": "funding-control-approver",
+          "sessionId": "session.funding-control-b",
+          "decision": "approve",
+          "decidedAt": "2026-01-15T15:02:00Z",
+          "receiptSequence": 2,
+          "approvalReceiptRef": "receipt.approval.disbursement-b",
+          "approvalReceiptDigest": "1aa91ec401c4c3a833a5b58773fac9125e5030ce1f77a2fe56d4e44af4cbadba",
+          "observedApprovalReceiptRefs": [
+            "receipt.approval.disbursement-a"
+          ],
+          "observedApprovalReceiptDigests": [
+            "af0b6b5b5a9f47b382134593d5ff8c5bd0a95e798d5408e0102a0ac6881cd432"
+          ],
+          "result": "dual_approval_recorded"
+        },
+        {
+          "operation": "domain-command.dispatch",
+          "planId": "plan.disbursement-01",
+          "planDigest": "5bb8b181d86413b031b8cca9ef3dc0516ad47e9d317696a36ad770c6080f43c4",
+          "preconditionSnapshotDigest": "0de0f9789138f5937bd03fcfc3bed64d1831252e05e7a155c5848fb1c3f1c8ba",
+          "approvalPolicyDigest": "e916bce63340782ec3bb1395f1405fdb26eb99bb74db9f923aa4d7db39a33375",
+          "sourceHandleRef": "handle.disbursement-source-01",
+          "destinationHandleRef": "handle.disbursement-destination-01",
+          "approvalReceiptDigests": [
+            "af0b6b5b5a9f47b382134593d5ff8c5bd0a95e798d5408e0102a0ac6881cd432",
+            "1aa91ec401c4c3a833a5b58773fac9125e5030ce1f77a2fe56d4e44af4cbadba"
+          ],
+          "attemptId": "attempt.disbursement-01",
+          "observedAt": "2026-01-15T15:03:00Z",
+          "result": "timeout_after_acceptance"
+        },
+        {
+          "operation": "domain-command.status",
+          "planId": "plan.disbursement-01",
+          "attemptId": "attempt.disbursement-01",
+          "planDigest": "5bb8b181d86413b031b8cca9ef3dc0516ad47e9d317696a36ad770c6080f43c4",
+          "preconditionSnapshotDigest": "0de0f9789138f5937bd03fcfc3bed64d1831252e05e7a155c5848fb1c3f1c8ba",
+          "approvalPolicyDigest": "e916bce63340782ec3bb1395f1405fdb26eb99bb74db9f923aa4d7db39a33375",
+          "approvalReceiptDigests": [
+            "af0b6b5b5a9f47b382134593d5ff8c5bd0a95e798d5408e0102a0ac6881cd432",
+            "1aa91ec401c4c3a833a5b58773fac9125e5030ce1f77a2fe56d4e44af4cbadba"
+          ],
+          "result": "effect_unknown",
+          "causallyVerified": false
+        },
+        {
+          "operation": "domain-command.status",
+          "planId": "plan.disbursement-01",
+          "attemptId": "attempt.disbursement-01",
+          "planDigest": "5bb8b181d86413b031b8cca9ef3dc0516ad47e9d317696a36ad770c6080f43c4",
+          "preconditionSnapshotDigest": "0de0f9789138f5937bd03fcfc3bed64d1831252e05e7a155c5848fb1c3f1c8ba",
+          "approvalPolicyDigest": "e916bce63340782ec3bb1395f1405fdb26eb99bb74db9f923aa4d7db39a33375",
+          "approvalReceiptDigests": [
+            "af0b6b5b5a9f47b382134593d5ff8c5bd0a95e798d5408e0102a0ac6881cd432",
+            "1aa91ec401c4c3a833a5b58773fac9125e5030ce1f77a2fe56d4e44af4cbadba"
+          ],
+          "result": "causally_verified",
+          "externalState": "causally_verified_not_executed_after_effect_unknown_hold",
+          "causallyVerified": true,
+          "causalProofRef": "proof.sha256.71be27a84a88accde642af1ae8249d0bf39a5b6c4c9758d7dbc8d0ad3e93b109"
+        }
+      ],
+      "requiredAssertions": [
+        "unsatisfied-condition-blocks",
+        "maker-cannot-approve",
+        "two-separate-actor-and-session-bound-funding-control-approvals",
+        "immutable-plan-and-destination-binding",
+        "expiry-denial-boundaries-observed",
+        "stale-plan-changed-destination-and-reused-receipt-rejected",
+        "no-blind-retry",
+        "effect-unknown-hold",
+        "causal-proof-before-terminal"
+      ]
+    },
+    {
+      "id": "fixture.postclose-trailing-suspense",
+      "scenarioId": "postclose-trailing-suspense",
+      "expectedOutcomeState": "both_items_closed",
+      "requiredCausalOutcomeStates": [
+        "trailing_document_received_and_delivery_suspense_resolved"
+      ],
+      "input": {
+        "trailingDocument": {
+          "id": "document.trailing-01",
+          "status": "missing",
+          "ownerRole": "shipping",
+          "dueAt": "2026-01-22T15:00:00Z"
+        },
+        "delivery": {
+          "id": "delivery-01",
+          "status": "suspense",
+          "ownerRole": "quality-control",
+          "reason": "document_mismatch"
+        }
+      },
+      "mockSequence": [
+        {
+          "operation": "task.list",
+          "result": "two_linked_owners"
+        },
+        {
+          "operation": "evidence.read",
+          "result": "partial"
+        },
+        {
+          "operation": "domain-command.plan",
+          "planId": "plan.postclose-01",
+          "result": "linked_closure_planned"
+        },
+        {
+          "operation": "domain-command.dispatch",
+          "planId": "plan.postclose-01",
+          "attemptId": "attempt.postclose-01",
+          "result": "accepted"
+        },
+        {
+          "operation": "domain-command.status",
+          "planId": "plan.postclose-01",
+          "attemptId": "attempt.postclose-01",
+          "result": "causally_verified",
+          "externalState": "trailing_document_received_and_delivery_suspense_resolved",
+          "causallyVerified": true,
+          "causalProofRef": "proof.sha256.c971d6244f3e53011d2fc78f67d1341c4d0f51dd72e35a0b20f16d3bb9da661e"
+        },
+        {
+          "operation": "work.read",
+          "result": "both_items_closed"
+        }
+      ],
+      "requiredAssertions": [
+        "separate-owners",
+        "linked-evidence",
+        "packet-level-resolution",
+        "closure-requires-both-items"
+      ]
+    },
+    {
+      "id": "fixture.insurance-suspense",
+      "scenarioId": "insurance-suspense",
+      "expectedOutcomeState": "resolved_after_evidence",
+      "requiredCausalOutcomeStates": [
+        "suspense_resolved"
+      ],
+      "input": {
+        "authorityVersion": "public-authority.synthetic-2026-01",
+        "requiredEvidence": "evidence.coverage-01",
+        "evidenceStatus": "not_observed",
+        "suspenseReason": "authority_evidence_missing",
+        "cureOwnerRole": "insurance"
+      },
+      "mockSequence": [
+        {
+          "operation": "decision.read",
+          "result": "needs_data"
+        },
+        {
+          "operation": "task.list",
+          "result": "suspense_open"
+        },
+        {
+          "operation": "evidence.read",
+          "result": "evidence_observed"
+        },
+        {
+          "operation": "domain-command.plan",
+          "planId": "plan.insurance-01",
+          "result": "suspense_resolution_planned"
+        },
+        {
+          "operation": "domain-command.dispatch",
+          "planId": "plan.insurance-01",
+          "attemptId": "attempt.insurance-01",
+          "result": "accepted"
+        },
+        {
+          "operation": "domain-command.status",
+          "planId": "plan.insurance-01",
+          "attemptId": "attempt.insurance-01",
+          "result": "causally_verified",
+          "externalState": "suspense_resolved",
+          "causallyVerified": true,
+          "causalProofRef": "proof.sha256.631492c89ddd3109546a29fb4ec380017bc3c2ebc3aebf4c1b1d4491dd97f837"
+        },
+        {
+          "operation": "work.read",
+          "result": "resolved_after_evidence"
+        }
+      ],
+      "requiredAssertions": [
+        "missing-evidence-not-failure-or-pass",
+        "authority-version-visible",
+        "cure-owner-visible",
+        "resolve-only-after-evidence"
+      ]
+    },
+    {
+      "id": "fixture.secondary-expiration-delivery",
+      "scenarioId": "secondary-expiration-delivery",
+      "expectedOutcomeState": "secondary_complete_after_purchase_advice_reconciliation",
+      "requiredCausalOutcomeStates": [
+        "extension_confirmed_and_delivery_allocated",
+        "purchase_advice_reconciled"
+      ],
+      "input": {
+        "commitmentId": "commitment.synthetic-01",
+        "expiresAt": "2026-01-15T18:00:00Z",
+        "extensionCost": "375.00",
+        "allocation": "pool.synthetic-02",
+        "deliveryStatus": "pending",
+        "purchaseAdviceAmount": "359810.00",
+        "permittedFields": [
+          "commitmentId",
+          "expiresAt",
+          "extensionCost",
+          "allocation",
+          "deliveryStatus",
+          "purchaseAdviceAmount"
+        ]
+      },
+      "mockSequence": [
+        {
+          "operation": "work.read",
+          "result": "expiring"
+        },
+        {
+          "operation": "domain-command.plan",
+          "planId": "plan.extension-01",
+          "result": "extension_approval_required"
+        },
+        {
+          "operation": "domain-command.approve",
+          "planId": "plan.extension-01",
+          "approvalReceiptRef": "receipt.approval.extension-01",
+          "result": "approved"
+        },
+        {
+          "operation": "domain-command.dispatch",
+          "planId": "plan.extension-01",
+          "attemptId": "attempt.extension-01",
+          "result": "accepted"
+        },
+        {
+          "operation": "domain-command.status",
+          "planId": "plan.extension-01",
+          "attemptId": "attempt.extension-01",
+          "result": "causally_verified",
+          "externalState": "extension_confirmed_and_delivery_allocated",
+          "causallyVerified": true,
+          "causalProofRef": "proof.sha256.b4407bc358f3cbb701186d833c739f5b0397ce5a1b7b5f66825f1b78a634e72e"
+        },
+        {
+          "operation": "evidence.read",
+          "result": "purchase_advice_observed"
+        },
+        {
+          "operation": "domain-command.plan",
+          "planId": "plan.purchase-advice-01",
+          "result": "reconciliation_planned"
+        },
+        {
+          "operation": "domain-command.dispatch",
+          "planId": "plan.purchase-advice-01",
+          "attemptId": "attempt.purchase-advice-01",
+          "result": "accepted"
+        },
+        {
+          "operation": "domain-command.status",
+          "planId": "plan.purchase-advice-01",
+          "attemptId": "attempt.purchase-advice-01",
+          "result": "causally_verified",
+          "externalState": "purchase_advice_reconciled",
+          "causallyVerified": true,
+          "causalProofRef": "proof.sha256.dd2a392b8183f5b3f960d66b21066634d6f483ff406a193ea02080fe911a21d0"
+        },
+        {
+          "operation": "work.read",
+          "result": "secondary_complete_after_purchase_advice_reconciliation"
+        }
+      ],
+      "requiredAssertions": [
+        "deadline-and-cost-visible",
+        "extension-decision-audited",
+        "minimize-loan-data",
+        "allocation-and-delivery-visible",
+        "reconcile-purchase-advice"
+      ]
+    },
+    {
+      "id": "fixture.handoff-reject-repair",
+      "scenarioId": "handoff-reject-repair",
+      "expectedOutcomeState": "handoff_v2_acknowledgement_audited_with_both_versions",
+      "requiredCausalOutcomeStates": [
+        "handoff_v2_repaired_from_v1",
+        "handoff_v2_acknowledged"
+      ],
+      "input": {
+        "tenantId": "tenant.synthetic-01",
+        "loanId": "loan.synthetic-001",
+        "handoffId": "handoff.synthetic-01",
+        "handoffV1": {
+          "version": 1,
+          "status": "rejected",
+          "missing": [
+            "income-lineage",
+            "fee-version"
+          ]
+        },
+        "handoffV2": {
+          "version": 2,
+          "status": "repaired",
+          "adds": [
+            "income-lineage",
+            "fee-version"
+          ]
+        },
+        "fromSnapshotDigest": "f982e92070b9201d78b599a46e8d336b780ab30797b53bc6053a5f44be91c5ab",
+        "toSnapshotDigest": "59461f2bc01b827552dbb0dbf568c58d843b7226ab5366892342b8791b4c3e88",
+        "repairDigest": "36dd8794d8196c526cd6c78a928db86cd86b2dfa4f110ee5d6db3b77aed2c8a7",
+        "repairProofRef": "proof.sha256.4343e385d5c74612926b65521d99b9578472c6197f8d7d7ead5e486eccce2364",
+        "acknowledgementProofRef": "proof.sha256.6bbac73d5b76840215c7132c361790dadac9dbf3947134165145b32104b55091",
+        "acknowledgement": "pending"
+      },
+      "mockSequence": [
+        {
+          "operation": "work.read",
+          "result": "rejected"
+        },
+        {
+          "operation": "field-change.plan",
+          "result": "repair_drafted_no_external_effect"
+        },
+        {
+          "operation": "domain-command.plan",
+          "planId": "plan.handoff-01",
+          "tenantId": "tenant.synthetic-01",
+          "loanId": "loan.synthetic-001",
+          "handoffId": "handoff.synthetic-01",
+          "fromVersion": 1,
+          "toVersion": 2,
+          "fromSnapshotDigest": "f982e92070b9201d78b599a46e8d336b780ab30797b53bc6053a5f44be91c5ab",
+          "toSnapshotDigest": "59461f2bc01b827552dbb0dbf568c58d843b7226ab5366892342b8791b4c3e88",
+          "repairDigest": "36dd8794d8196c526cd6c78a928db86cd86b2dfa4f110ee5d6db3b77aed2c8a7",
+          "result": "handoff_repair_planned"
+        },
+        {
+          "operation": "domain-command.dispatch",
+          "planId": "plan.handoff-01",
+          "attemptId": "attempt.handoff-01",
+          "tenantId": "tenant.synthetic-01",
+          "loanId": "loan.synthetic-001",
+          "handoffId": "handoff.synthetic-01",
+          "fromVersion": 1,
+          "toVersion": 2,
+          "fromSnapshotDigest": "f982e92070b9201d78b599a46e8d336b780ab30797b53bc6053a5f44be91c5ab",
+          "toSnapshotDigest": "59461f2bc01b827552dbb0dbf568c58d843b7226ab5366892342b8791b4c3e88",
+          "repairDigest": "36dd8794d8196c526cd6c78a928db86cd86b2dfa4f110ee5d6db3b77aed2c8a7",
+          "result": "accepted"
+        },
+        {
+          "operation": "domain-command.status",
+          "planId": "plan.handoff-01",
+          "attemptId": "attempt.handoff-01",
+          "tenantId": "tenant.synthetic-01",
+          "loanId": "loan.synthetic-001",
+          "handoffId": "handoff.synthetic-01",
+          "fromVersion": 1,
+          "toVersion": 2,
+          "fromSnapshotDigest": "f982e92070b9201d78b599a46e8d336b780ab30797b53bc6053a5f44be91c5ab",
+          "toSnapshotDigest": "59461f2bc01b827552dbb0dbf568c58d843b7226ab5366892342b8791b4c3e88",
+          "repairDigest": "36dd8794d8196c526cd6c78a928db86cd86b2dfa4f110ee5d6db3b77aed2c8a7",
+          "result": "causally_verified",
+          "externalState": "handoff_v2_repaired_from_v1",
+          "causallyVerified": true,
+          "causalProofRef": "proof.sha256.4343e385d5c74612926b65521d99b9578472c6197f8d7d7ead5e486eccce2364"
+        },
+        {
+          "operation": "domain-command.status",
+          "planId": "plan.handoff-01",
+          "attemptId": "attempt.handoff-01",
+          "tenantId": "tenant.synthetic-01",
+          "loanId": "loan.synthetic-001",
+          "handoffId": "handoff.synthetic-01",
+          "fromVersion": 1,
+          "toVersion": 2,
+          "fromSnapshotDigest": "f982e92070b9201d78b599a46e8d336b780ab30797b53bc6053a5f44be91c5ab",
+          "toSnapshotDigest": "59461f2bc01b827552dbb0dbf568c58d843b7226ab5366892342b8791b4c3e88",
+          "repairDigest": "36dd8794d8196c526cd6c78a928db86cd86b2dfa4f110ee5d6db3b77aed2c8a7",
+          "repairProofRef": "proof.sha256.4343e385d5c74612926b65521d99b9578472c6197f8d7d7ead5e486eccce2364",
+          "repairedSnapshotDigest": "59461f2bc01b827552dbb0dbf568c58d843b7226ab5366892342b8791b4c3e88",
+          "result": "causally_verified",
+          "externalState": "handoff_v2_acknowledged",
+          "causallyVerified": true,
+          "causalProofRef": "proof.sha256.6bbac73d5b76840215c7132c361790dadac9dbf3947134165145b32104b55091"
+        },
+        {
+          "operation": "work.read",
+          "tenantId": "tenant.synthetic-01",
+          "loanId": "loan.synthetic-001",
+          "handoffId": "handoff.synthetic-01",
+          "fromVersion": 1,
+          "toVersion": 2,
+          "fromSnapshotDigest": "f982e92070b9201d78b599a46e8d336b780ab30797b53bc6053a5f44be91c5ab",
+          "toSnapshotDigest": "59461f2bc01b827552dbb0dbf568c58d843b7226ab5366892342b8791b4c3e88",
+          "repairDigest": "36dd8794d8196c526cd6c78a928db86cd86b2dfa4f110ee5d6db3b77aed2c8a7",
+          "repairProofRef": "proof.sha256.4343e385d5c74612926b65521d99b9578472c6197f8d7d7ead5e486eccce2364",
+          "acknowledgementProofRef": "proof.sha256.6bbac73d5b76840215c7132c361790dadac9dbf3947134165145b32104b55091",
+          "result": "handoff_v2_acknowledgement_audited_with_both_versions"
+        }
+      ],
+      "requiredAssertions": [
+        "preserve-v1-and-v2",
+        "rejection-reason-actionable",
+        "version-and-repair-digest-bound-before-acknowledgement",
+        "acknowledgement-audited"
+      ]
+    },
+    {
+      "id": "fixture.role-configuration-no-authority",
+      "scenarioId": "role-configuration-no-authority",
+      "expectedOutcomeState": "capabilities_unchanged_and_hidden_field_inaccessible",
+      "requiredCausalOutcomeStates": [
+        "presentation_configuration_applied"
+      ],
+      "input": {
+        "roleTemplate": {
+          "rename": {
+            "processor": "File coordinator"
+          },
+          "combinePresentation": [
+            "setup",
+            "processor"
+          ],
+          "queueMapping": {
+            "priority": [
+              "missing_evidence",
+              "deadline_risk"
+            ]
+          },
+          "terminology": {
+            "loan": "case"
+          },
+          "density": "compact",
+          "queueLabel": "Priority work <img src=x onerror=alert(1)>"
+        },
+        "capabilityBefore": [
+          "cap.read.synthetic"
+        ],
+        "capabilityAfter": [
+          "cap.read.synthetic"
+        ],
+        "hiddenFieldStatus": "inaccessible"
+      },
+      "mockSequence": [
+        {
+          "operation": "work.read",
+          "result": "configuration_preview"
+        },
+        {
+          "operation": "domain-command.plan",
+          "planId": "plan.role-config-01",
+          "result": "admin_approval_required"
+        },
+        {
+          "operation": "domain-command.approve",
+          "planId": "plan.role-config-01",
+          "approvalReceiptRef": "receipt.approval.role-config-01",
+          "result": "approved"
+        },
+        {
+          "operation": "domain-command.dispatch",
+          "planId": "plan.role-config-01",
+          "attemptId": "attempt.role-config-01",
+          "result": "accepted"
+        },
+        {
+          "operation": "domain-command.status",
+          "planId": "plan.role-config-01",
+          "attemptId": "attempt.role-config-01",
+          "result": "causally_verified",
+          "externalState": "presentation_configuration_applied",
+          "causallyVerified": true,
+          "causalProofRef": "proof.sha256.a5701e2e41e25d29b9d12eca79b5bfc86479b39d804a081521849415871ffd15"
+        },
+        {
+          "operation": "work.read",
+          "result": "capabilities_unchanged_and_hidden_field_inaccessible"
+        }
+      ],
+      "requiredAssertions": [
+        "rename-combine-map-terminology-and-density",
+        "configuration-does-not-grant-authority",
+        "untrusted-label-not-executable",
+        "inaccessible-not-absent"
+      ]
+    },
+    {
+      "id": "fixture.install-fresh-vs-adoption",
+      "scenarioId": "install-fresh-vs-adoption",
+      "expectedOutcomeState": "ready_with_limitations_not_ready",
+      "requiredCausalOutcomeStates": [
+        "fresh_install_dry_run_verified_no_external_effect",
+        "partial_install_effect_reconciled",
+        "ready_with_limitations"
+      ],
+      "input": {
+        "freshTarget": {
+          "state": "empty",
+          "mode": "fresh",
+          "targetRef": "target.synthetic-fresh-01",
+          "authorityScopeRef": "authority-scope.synthetic-fresh-01",
+          "discoveryInventory": {
+            "dataState": "empty",
+            "externalObjects": [],
+            "observedAt": "2026-01-15T15:00:00Z"
+          },
+          "discoverySnapshotDigest": "e42b2e4eb4c0f83d0ae2a8093c077c213c2de40ff7ec0e0cd20080d7128e77e2"
+        },
+        "adoptionTarget": {
+          "state": "nonempty",
+          "mode": "first_adoption",
+          "custody": "required",
+          "externalAuthorityRootInitially": "missing",
+          "externalAuthorityRootReceipt": "receipt.synthetic-root-01",
+          "custodyReceipt": "receipt.synthetic-custody-01",
+          "targetRef": "target.synthetic-adoption-01",
+          "authorityScopeRef": "authority-scope.synthetic-adoption-01",
+          "discoveryInventory": {
+            "dataState": "nonempty",
+            "externalObjects": [
+              "legacy-record-set.synthetic-01"
+            ],
+            "observedAt": "2026-01-15T15:00:00Z"
+          },
+          "discoverySnapshotDigest": "8ce3db772842e917445bad7ddaee3ebef55ac460c8acc6a7ef4d4da865d5966a"
+        },
+        "failedPreflight": "authority_root_missing",
+        "interruptionAt": "baseline_apply",
+        "resumeHandleRef": "handle.synthetic-resume-01",
+        "resumeAuthorityRef": "authority.resume.install-01",
+        "resumeSecretMaterial": "not_present",
+        "custodianActorId": "actor.lender-custodian-01",
+        "custodianSessionId": "session.lender-custodian-01",
+        "plannerActorId": "actor.install-planner-01",
+        "plannerSessionId": "session.install-planner-01",
+        "executorActorId": "actor.install-executor-01",
+        "executorSessionId": "session.install-executor-01",
+        "separatedApprover": {
+          "actorId": "actor.lifecycle-approver-install-01",
+          "roleLensId": "separated-approver",
+          "sessionId": "session.lifecycle-approver-install-01"
+        },
+        "plannedAt": "2026-01-15T15:04:00Z",
+        "approvalDecidedAt": "2026-01-15T15:05:00Z",
+        "approvalExpiresAt": "2026-01-15T15:30:00Z",
+        "dispatchObservedAt": "2026-01-15T15:06:00Z",
+        "approvalPolicyDigest": "a3365007ce0a47b6ee14902fac938e640bd9c78d7741dfe81aff9dbcafb7364d",
+        "approvalReceiptRef": "receipt.approval.install-01",
+        "approvalReceiptDigest": "be4f0e122a4df922f1260050d6a41f1b0fd4a881dde7117420d47310105f07b6",
+        "finalLimitations": [
+          "live_connector_not_certified"
+        ],
+        "freshPlanDigest": "1985a9b50b54974aa8a71a787a60869287d33f847a438fc7f42048a2edd15315",
+        "adoptionPlanDigest": "b28a24a3d8cf88a1de8f5c6fd3e01d153b3caa9533156542915781e1de20f811"
+      },
+      "mockSequence": [
+        {
+          "operation": "installation.read",
+          "freshPlanDigest": "1985a9b50b54974aa8a71a787a60869287d33f847a438fc7f42048a2edd15315",
+          "adoptionPlanDigest": "b28a24a3d8cf88a1de8f5c6fd3e01d153b3caa9533156542915781e1de20f811",
+          "freshTargetState": "empty",
+          "adoptionTargetState": "nonempty",
+          "freshTargetRef": "target.synthetic-fresh-01",
+          "freshAuthorityScopeRef": "authority-scope.synthetic-fresh-01",
+          "adoptionTargetRef": "target.synthetic-adoption-01",
+          "adoptionAuthorityScopeRef": "authority-scope.synthetic-adoption-01",
+          "result": "mode_selection"
+        },
+        {
+          "operation": "domain-command.plan",
+          "planId": "plan.install-fresh-dry-run-01",
+          "installMode": "fresh",
+          "targetRef": "target.synthetic-fresh-01",
+          "authorityScopeRef": "authority-scope.synthetic-fresh-01",
+          "installPlanDigest": "1985a9b50b54974aa8a71a787a60869287d33f847a438fc7f42048a2edd15315",
+          "result": "fresh_install_dry_run_planned_no_external_effect"
+        },
+        {
+          "operation": "domain-command.dispatch",
+          "planId": "plan.install-fresh-dry-run-01",
+          "attemptId": "attempt.install-fresh-dry-run-01",
+          "installMode": "fresh",
+          "targetRef": "target.synthetic-fresh-01",
+          "authorityScopeRef": "authority-scope.synthetic-fresh-01",
+          "installPlanDigest": "1985a9b50b54974aa8a71a787a60869287d33f847a438fc7f42048a2edd15315",
+          "result": "dry_run_accepted_no_external_effect"
+        },
+        {
+          "operation": "domain-command.status",
+          "planId": "plan.install-fresh-dry-run-01",
+          "attemptId": "attempt.install-fresh-dry-run-01",
+          "installMode": "fresh",
+          "targetRef": "target.synthetic-fresh-01",
+          "authorityScopeRef": "authority-scope.synthetic-fresh-01",
+          "installPlanDigest": "1985a9b50b54974aa8a71a787a60869287d33f847a438fc7f42048a2edd15315",
+          "result": "causally_verified",
+          "externalState": "fresh_install_dry_run_verified_no_external_effect",
+          "causallyVerified": true,
+          "causalProofRef": "proof.sha256.7408c2f6ec26d23d5be542863bbeb2d4ed9696a9434b92c37840805e5e2f506d"
+        },
+        {
+          "operation": "installation.read",
+          "assessmentId": "assessment.install-preflight-01",
+          "installMode": "first_adoption",
+          "targetRef": "target.synthetic-adoption-01",
+          "authorityScopeRef": "authority-scope.synthetic-adoption-01",
+          "discoverySnapshotDigest": "8ce3db772842e917445bad7ddaee3ebef55ac460c8acc6a7ef4d4da865d5966a",
+          "failedPreflight": "authority_root_missing",
+          "result": "preflight_failed_authority_root_required"
+        },
+        {
+          "operation": "installation.read",
+          "installMode": "first_adoption",
+          "targetRef": "target.synthetic-adoption-01",
+          "authorityScopeRef": "authority-scope.synthetic-adoption-01",
+          "custodianActorId": "actor.lender-custodian-01",
+          "custodianSessionId": "session.lender-custodian-01",
+          "installPlanDigest": "b28a24a3d8cf88a1de8f5c6fd3e01d153b3caa9533156542915781e1de20f811",
+          "externalAuthorityRootReceipt": "receipt.synthetic-root-01",
+          "custodyReceipt": "receipt.synthetic-custody-01",
+          "result": "custody_and_authority_receipts_verified"
+        },
+        {
+          "operation": "domain-command.plan",
+          "planId": "plan.install-01",
+          "installMode": "first_adoption",
+          "targetRef": "target.synthetic-adoption-01",
+          "authorityScopeRef": "authority-scope.synthetic-adoption-01",
+          "plannerActorId": "actor.install-planner-01",
+          "plannerSessionId": "session.install-planner-01",
+          "plannedAt": "2026-01-15T15:04:00Z",
+          "approvalPolicyDigest": "a3365007ce0a47b6ee14902fac938e640bd9c78d7741dfe81aff9dbcafb7364d",
+          "installPlanDigest": "b28a24a3d8cf88a1de8f5c6fd3e01d153b3caa9533156542915781e1de20f811",
+          "result": "installation_approval_required"
+        },
+        {
+          "operation": "domain-command.approve",
+          "planId": "plan.install-01",
+          "installMode": "first_adoption",
+          "targetRef": "target.synthetic-adoption-01",
+          "authorityScopeRef": "authority-scope.synthetic-adoption-01",
+          "actorId": "actor.lifecycle-approver-install-01",
+          "roleLensId": "separated-approver",
+          "sessionId": "session.lifecycle-approver-install-01",
+          "decision": "approve",
+          "decidedAt": "2026-01-15T15:05:00Z",
+          "expiresAt": "2026-01-15T15:30:00Z",
+          "approvalPolicyDigest": "a3365007ce0a47b6ee14902fac938e640bd9c78d7741dfe81aff9dbcafb7364d",
+          "approvalReceiptDigest": "be4f0e122a4df922f1260050d6a41f1b0fd4a881dde7117420d47310105f07b6",
+          "installPlanDigest": "b28a24a3d8cf88a1de8f5c6fd3e01d153b3caa9533156542915781e1de20f811",
+          "approvalReceiptRef": "receipt.approval.install-01",
+          "result": "approved"
+        },
+        {
+          "operation": "domain-command.dispatch",
+          "planId": "plan.install-01",
+          "attemptId": "attempt.install-01",
+          "installMode": "first_adoption",
+          "targetRef": "target.synthetic-adoption-01",
+          "authorityScopeRef": "authority-scope.synthetic-adoption-01",
+          "executorActorId": "actor.install-executor-01",
+          "executorSessionId": "session.install-executor-01",
+          "observedAt": "2026-01-15T15:06:00Z",
+          "approvalReceiptRef": "receipt.approval.install-01",
+          "approvalReceiptDigest": "be4f0e122a4df922f1260050d6a41f1b0fd4a881dde7117420d47310105f07b6",
+          "installPlanDigest": "b28a24a3d8cf88a1de8f5c6fd3e01d153b3caa9533156542915781e1de20f811",
+          "result": "interrupted_after_acceptance"
+        },
+        {
+          "operation": "domain-command.status",
+          "planId": "plan.install-01",
+          "attemptId": "attempt.install-01",
+          "installMode": "first_adoption",
+          "targetRef": "target.synthetic-adoption-01",
+          "authorityScopeRef": "authority-scope.synthetic-adoption-01",
+          "installPlanDigest": "b28a24a3d8cf88a1de8f5c6fd3e01d153b3caa9533156542915781e1de20f811",
+          "result": "effect_unknown",
+          "causallyVerified": false
+        },
+        {
+          "operation": "domain-command.status",
+          "planId": "plan.install-01",
+          "attemptId": "attempt.install-01",
+          "installMode": "first_adoption",
+          "targetRef": "target.synthetic-adoption-01",
+          "authorityScopeRef": "authority-scope.synthetic-adoption-01",
+          "installPlanDigest": "b28a24a3d8cf88a1de8f5c6fd3e01d153b3caa9533156542915781e1de20f811",
+          "result": "causally_verified",
+          "externalState": "partial_install_effect_reconciled",
+          "causallyVerified": true,
+          "causalProofRef": "proof.sha256.510c3716d08fb84cb60419a49343b81927b170a0abe3dd36bba7764f7529a07a"
+        },
+        {
+          "operation": "domain-command.resume",
+          "planId": "plan.install-01",
+          "attemptId": "attempt.install-01",
+          "installMode": "first_adoption",
+          "targetRef": "target.synthetic-adoption-01",
+          "authorityScopeRef": "authority-scope.synthetic-adoption-01",
+          "installPlanDigest": "b28a24a3d8cf88a1de8f5c6fd3e01d153b3caa9533156542915781e1de20f811",
+          "resumeHandleRef": "handle.synthetic-resume-01",
+          "resumeAuthorityRef": "authority.resume.install-01",
+          "secretMaterialProvided": false,
+          "result": "resume_accepted_same_attempt"
+        },
+        {
+          "operation": "domain-command.status",
+          "planId": "plan.install-01",
+          "attemptId": "attempt.install-01",
+          "installMode": "first_adoption",
+          "targetRef": "target.synthetic-adoption-01",
+          "authorityScopeRef": "authority-scope.synthetic-adoption-01",
+          "installPlanDigest": "b28a24a3d8cf88a1de8f5c6fd3e01d153b3caa9533156542915781e1de20f811",
+          "result": "causally_verified",
+          "externalState": "ready_with_limitations",
+          "limitations": [
+            "live_connector_not_certified"
+          ],
+          "causallyVerified": true,
+          "causalProofRef": "proof.sha256.0d0706467a1fe9d6e8cc1a683839f62a86148ba79901d5f25edc2cd3744ffe46"
+        },
+        {
+          "operation": "installation.read",
+          "installMode": "first_adoption",
+          "targetRef": "target.synthetic-adoption-01",
+          "authorityScopeRef": "authority-scope.synthetic-adoption-01",
+          "installPlanDigest": "b28a24a3d8cf88a1de8f5c6fd3e01d153b3caa9533156542915781e1de20f811",
+          "limitations": [
+            "live_connector_not_certified"
+          ],
+          "result": "ready_with_limitations_not_ready"
+        }
+      ],
+      "requiredAssertions": [
+        "fresh-and-adoption-branch",
+        "authority-root-fails-closed",
+        "supply-custody-and-external-authority-evidence",
+        "resolve-failed-preflight",
+        "resume-without-secret",
+        "limitations-not-ready"
+      ]
+    },
+    {
+      "id": "fixture.lifecycle-migration-recovery",
+      "scenarioId": "lifecycle-migration-recovery",
+      "expectedOutcomeState": "decommissioned_uninstalled_and_terminal_tombstone_recorded",
+      "requiredCausalOutcomeStates": [
+        "cutover_started_partial_effect_observed",
+        "takeover_generation_4_activated",
+        "forward_replay_completed",
+        "cutback_reconciled_and_restored_consistent",
+        "prior_authority_revoked_and_rejected",
+        "decommissioned_uninstalled_and_terminal_tombstone_recorded"
+      ],
+      "input": {
+        "upgrade": {
+          "from": "n-1",
+          "to": "n",
+          "status": "planned"
+        },
+        "watermark": "0000042",
+        "deltaIds": [
+          "delta-43",
+          "delta-44"
+        ],
+        "acceptedAttemptIds": [
+          "attempt.migration-01"
+        ],
+        "cutover": "pending",
+        "cancelAfterEffect": true,
+        "cancelAuthorizationRef": "authority.cancel.migration-01",
+        "recoveryOwnerRole": "support-recovery-operator",
+        "priorTakeoverGeneration": 3,
+        "takeoverGeneration": 4,
+        "takeoverAuthorityRef": "authority.takeover.migration-01",
+        "cutbackMode": "forward_replay_required",
+        "authorityEpoch": "epoch.synthetic-03",
+        "sourceMigrationPlanId": "plan.migration-01",
+        "sourceMigrationAttemptId": "attempt.migration-01",
+        "migrationPlannerActorId": "actor.migration-planner-01",
+        "migrationPlannerSessionId": "session.migration-planner-01",
+        "migrationExecutorActorId": "actor.migration-executor-01",
+        "migrationExecutorSessionId": "session.migration-executor-01",
+        "migrationApproval": {
+          "actorId": "actor.lifecycle-approver-migration-01",
+          "roleLensId": "separated-approver",
+          "sessionId": "session.lifecycle-approver-migration-01"
+        },
+        "migrationPlannedAt": "2026-01-15T15:10:00Z",
+        "migrationApprovalDecidedAt": "2026-01-15T15:11:00Z",
+        "migrationApprovalExpiresAt": "2026-01-15T15:20:00Z",
+        "migrationDispatchObservedAt": "2026-01-15T15:12:00Z",
+        "migrationApprovalPolicyDigest": "c3163e1644f6ff39dc1d12bd22e0d300ce0f21edaa1bbb75c40229a28aa34e2d",
+        "migrationApprovalReceiptRef": "receipt.approval.migration-01",
+        "migrationApprovalReceiptDigest": "ad024666a339e2c6d83a968dea3153739b369e5094ef82307237d00f33662801",
+        "migrationDigest": "ec660651274013c28bef02271cee71fd85a69819fede69d60bbadca8e4c1d4c3",
+        "authorityScopeRef": "authority-scope.synthetic-installation-01",
+        "authorityRevocationProofRef": "proof.sha256.88468b7af680adaf56fae41042c339ca1126253860c97199a4db361627515a3d",
+        "decommissionPlannerActorId": "actor.decommission-planner-01",
+        "decommissionPlannerSessionId": "session.decommission-planner-01",
+        "decommissionExecutorActorId": "actor.decommission-executor-01",
+        "decommissionExecutorSessionId": "session.decommission-executor-01",
+        "decommissionApproval": {
+          "actorId": "actor.lifecycle-approver-decommission-01",
+          "roleLensId": "separated-approver",
+          "sessionId": "session.lifecycle-approver-decommission-01"
+        },
+        "decommissionPlannedAt": "2026-01-15T15:30:00Z",
+        "decommissionApprovalDecidedAt": "2026-01-15T15:31:00Z",
+        "decommissionApprovalExpiresAt": "2026-01-15T16:00:00Z",
+        "decommissionDispatchObservedAt": "2026-01-15T15:32:00Z",
+        "decommissionApprovalPolicyDigest": "4717dd7b085c0bb3632d3ad57219579c08c78bf115375431911c90b8a8db6109",
+        "decommissionPlanDigest": "d79e6ce3543419bfa2ea39da4548be376cba46f6050eb9e0586457d04844ca19",
+        "decommissionApprovalReceiptRef": "receipt.approval.decommission-01",
+        "decommissionApprovalReceiptDigest": "63fc06d7fc59c0965eb689893cf8a6e1801203558a40b8ac6e587b4068851871",
+        "decommission": "required",
+        "uninstall": "required",
+        "finalTombstone": "required"
+      },
+      "mockSequence": [
+        {
+          "operation": "domain-command.plan",
+          "planId": "plan.migration-01",
+          "schemaVersion": "1.0.0",
+          "tenantId": "tenant.synthetic-01",
+          "plannerActorId": "actor.migration-planner-01",
+          "plannerSessionId": "session.migration-planner-01",
+          "executorActorId": "actor.migration-executor-01",
+          "executorSessionId": "session.migration-executor-01",
+          "plannedAt": "2026-01-15T15:10:00Z",
+          "expiresAt": "2026-01-15T15:20:00Z",
+          "approvalPolicyDigest": "c3163e1644f6ff39dc1d12bd22e0d300ce0f21edaa1bbb75c40229a28aa34e2d",
+          "upgrade": {
+            "from": "n-1",
+            "to": "n",
+            "status": "planned"
+          },
+          "watermark": "0000042",
+          "deltaIds": [
+            "delta-43",
+            "delta-44"
+          ],
+          "acceptedAttemptIds": [
+            "attempt.migration-01"
+          ],
+          "cutover": "pending",
+          "cancelAfterEffect": true,
+          "cancelAuthorizationRef": "authority.cancel.migration-01",
+          "cutbackMode": "forward_replay_required",
+          "takeoverAuthorityRef": "authority.takeover.migration-01",
+          "decommission": "required",
+          "uninstall": "required",
+          "finalTombstone": "required",
+          "sourceAttemptId": "attempt.migration-01",
+          "migrationDigest": "ec660651274013c28bef02271cee71fd85a69819fede69d60bbadca8e4c1d4c3",
+          "authorityScopeRef": "authority-scope.synthetic-installation-01",
+          "priorAuthorityGeneration": 3,
+          "targetAuthorityGeneration": 4,
+          "authorityEpoch": "epoch.synthetic-03",
+          "result": "upgrade_and_migration_approval_required"
+        },
+        {
+          "operation": "domain-command.approve",
+          "planId": "plan.migration-01",
+          "migrationDigest": "ec660651274013c28bef02271cee71fd85a69819fede69d60bbadca8e4c1d4c3",
+          "actorId": "actor.lifecycle-approver-migration-01",
+          "roleLensId": "separated-approver",
+          "sessionId": "session.lifecycle-approver-migration-01",
+          "decision": "approve",
+          "decidedAt": "2026-01-15T15:11:00Z",
+          "expiresAt": "2026-01-15T15:20:00Z",
+          "approvalPolicyDigest": "c3163e1644f6ff39dc1d12bd22e0d300ce0f21edaa1bbb75c40229a28aa34e2d",
+          "approvalReceiptDigest": "ad024666a339e2c6d83a968dea3153739b369e5094ef82307237d00f33662801",
+          "approvalReceiptRef": "receipt.approval.migration-01",
+          "result": "approved"
+        },
+        {
+          "operation": "domain-command.dispatch",
+          "planId": "plan.migration-01",
+          "attemptId": "attempt.migration-01",
+          "migrationDigest": "ec660651274013c28bef02271cee71fd85a69819fede69d60bbadca8e4c1d4c3",
+          "executorActorId": "actor.migration-executor-01",
+          "executorSessionId": "session.migration-executor-01",
+          "observedAt": "2026-01-15T15:12:00Z",
+          "approvalReceiptRef": "receipt.approval.migration-01",
+          "approvalReceiptDigest": "ad024666a339e2c6d83a968dea3153739b369e5094ef82307237d00f33662801",
+          "result": "accepted"
+        },
+        {
+          "operation": "domain-command.status",
+          "planId": "plan.migration-01",
+          "attemptId": "attempt.migration-01",
+          "migrationDigest": "ec660651274013c28bef02271cee71fd85a69819fede69d60bbadca8e4c1d4c3",
+          "result": "causally_verified",
+          "externalState": "cutover_started_partial_effect_observed",
+          "causallyVerified": true,
+          "causalProofRef": "proof.sha256.8b759d15b49a1abb22b0bedcc61e5342111583ae3e13a6ac6ab6f325c671a41a"
+        },
+        {
+          "operation": "domain-command.cancel",
+          "planId": "plan.migration-01",
+          "attemptId": "attempt.migration-01",
+          "migrationDigest": "ec660651274013c28bef02271cee71fd85a69819fede69d60bbadca8e4c1d4c3",
+          "cancelAuthorizationRef": "authority.cancel.migration-01",
+          "result": "cancel_requested_post_effect"
+        },
+        {
+          "operation": "domain-command.status",
+          "planId": "plan.migration-01",
+          "attemptId": "attempt.migration-01",
+          "migrationDigest": "ec660651274013c28bef02271cee71fd85a69819fede69d60bbadca8e4c1d4c3",
+          "result": "recovery_required",
+          "causallyVerified": false
+        },
+        {
+          "operation": "domain-command.takeover",
+          "planId": "plan.migration-01",
+          "attemptId": "attempt.migration-01",
+          "migrationDigest": "ec660651274013c28bef02271cee71fd85a69819fede69d60bbadca8e4c1d4c3",
+          "priorGeneration": 3,
+          "takeoverGeneration": 4,
+          "takeoverAuthorityRef": "authority.takeover.migration-01",
+          "result": "takeover_accepted"
+        },
+        {
+          "operation": "domain-command.status",
+          "planId": "plan.migration-01",
+          "attemptId": "attempt.migration-01",
+          "migrationDigest": "ec660651274013c28bef02271cee71fd85a69819fede69d60bbadca8e4c1d4c3",
+          "result": "causally_verified",
+          "externalState": "takeover_generation_4_activated",
+          "causallyVerified": true,
+          "causalProofRef": "proof.sha256.cc35758c4eede5630e8a6d342094813187f7ca0d040723d43dc4e142b0af7e8e"
+        },
+        {
+          "operation": "domain-command.status",
+          "planId": "plan.migration-01",
+          "attemptId": "attempt.migration-01",
+          "migrationDigest": "ec660651274013c28bef02271cee71fd85a69819fede69d60bbadca8e4c1d4c3",
+          "result": "causally_verified",
+          "externalState": "forward_replay_completed",
+          "causallyVerified": true,
+          "causalProofRef": "proof.sha256.014e09ec896334944adaad834523ce6e68f33b11625962dc6143782f133a3f9f"
+        },
+        {
+          "operation": "domain-command.status",
+          "planId": "plan.migration-01",
+          "attemptId": "attempt.migration-01",
+          "migrationDigest": "ec660651274013c28bef02271cee71fd85a69819fede69d60bbadca8e4c1d4c3",
+          "result": "causally_verified",
+          "externalState": "cutback_reconciled_and_restored_consistent",
+          "causallyVerified": true,
+          "causalProofRef": "proof.sha256.990737224bc7cd1239710cf93e5acd433677258e13c41252375ef3f651538834"
+        },
+        {
+          "operation": "domain-command.status",
+          "planId": "plan.migration-01",
+          "attemptId": "attempt.migration-01",
+          "migrationDigest": "ec660651274013c28bef02271cee71fd85a69819fede69d60bbadca8e4c1d4c3",
+          "result": "causally_verified",
+          "externalState": "prior_authority_revoked_and_rejected",
+          "authorityScopeRef": "authority-scope.synthetic-installation-01",
+          "revokedAuthorityGeneration": 3,
+          "currentAuthorityGeneration": 4,
+          "authorityEpoch": "epoch.synthetic-03",
+          "causallyVerified": true,
+          "causalProofRef": "proof.sha256.88468b7af680adaf56fae41042c339ca1126253860c97199a4db361627515a3d"
+        },
+        {
+          "operation": "domain-command.plan",
+          "planId": "plan.decommission-01",
+          "sourcePlanId": "plan.migration-01",
+          "sourceAttemptId": "attempt.migration-01",
+          "sourceMigrationDigest": "ec660651274013c28bef02271cee71fd85a69819fede69d60bbadca8e4c1d4c3",
+          "plannerActorId": "actor.decommission-planner-01",
+          "plannerSessionId": "session.decommission-planner-01",
+          "executorActorId": "actor.decommission-executor-01",
+          "executorSessionId": "session.decommission-executor-01",
+          "plannedAt": "2026-01-15T15:30:00Z",
+          "expiresAt": "2026-01-15T16:00:00Z",
+          "approvalPolicyDigest": "4717dd7b085c0bb3632d3ad57219579c08c78bf115375431911c90b8a8db6109",
+          "decommissionPlanDigest": "d79e6ce3543419bfa2ea39da4548be376cba46f6050eb9e0586457d04844ca19",
+          "authorityEpoch": "epoch.synthetic-03",
+          "authorityGeneration": 4,
+          "authorityScopeRef": "authority-scope.synthetic-installation-01",
+          "authorityRevocationProofRef": "proof.sha256.88468b7af680adaf56fae41042c339ca1126253860c97199a4db361627515a3d",
+          "result": "decommission_approval_required"
+        },
+        {
+          "operation": "domain-command.approve",
+          "planId": "plan.decommission-01",
+          "sourcePlanId": "plan.migration-01",
+          "sourceAttemptId": "attempt.migration-01",
+          "sourceMigrationDigest": "ec660651274013c28bef02271cee71fd85a69819fede69d60bbadca8e4c1d4c3",
+          "actorId": "actor.lifecycle-approver-decommission-01",
+          "roleLensId": "separated-approver",
+          "sessionId": "session.lifecycle-approver-decommission-01",
+          "decision": "approve",
+          "decidedAt": "2026-01-15T15:31:00Z",
+          "expiresAt": "2026-01-15T16:00:00Z",
+          "approvalPolicyDigest": "4717dd7b085c0bb3632d3ad57219579c08c78bf115375431911c90b8a8db6109",
+          "decommissionPlanDigest": "d79e6ce3543419bfa2ea39da4548be376cba46f6050eb9e0586457d04844ca19",
+          "approvalReceiptDigest": "63fc06d7fc59c0965eb689893cf8a6e1801203558a40b8ac6e587b4068851871",
+          "authorityEpoch": "epoch.synthetic-03",
+          "authorityGeneration": 4,
+          "authorityScopeRef": "authority-scope.synthetic-installation-01",
+          "authorityRevocationProofRef": "proof.sha256.88468b7af680adaf56fae41042c339ca1126253860c97199a4db361627515a3d",
+          "approvalReceiptRef": "receipt.approval.decommission-01",
+          "result": "approved_with_narrow_decommission_authority"
+        },
+        {
+          "operation": "domain-command.dispatch",
+          "planId": "plan.decommission-01",
+          "attemptId": "attempt.decommission-01",
+          "sourcePlanId": "plan.migration-01",
+          "sourceAttemptId": "attempt.migration-01",
+          "sourceMigrationDigest": "ec660651274013c28bef02271cee71fd85a69819fede69d60bbadca8e4c1d4c3",
+          "executorActorId": "actor.decommission-executor-01",
+          "executorSessionId": "session.decommission-executor-01",
+          "observedAt": "2026-01-15T15:32:00Z",
+          "decommissionPlanDigest": "d79e6ce3543419bfa2ea39da4548be376cba46f6050eb9e0586457d04844ca19",
+          "approvalReceiptRef": "receipt.approval.decommission-01",
+          "approvalReceiptDigest": "63fc06d7fc59c0965eb689893cf8a6e1801203558a40b8ac6e587b4068851871",
+          "authorityEpoch": "epoch.synthetic-03",
+          "authorityGeneration": 4,
+          "authorityScopeRef": "authority-scope.synthetic-installation-01",
+          "authorityRevocationProofRef": "proof.sha256.88468b7af680adaf56fae41042c339ca1126253860c97199a4db361627515a3d",
+          "result": "accepted"
+        },
+        {
+          "operation": "domain-command.status",
+          "planId": "plan.decommission-01",
+          "attemptId": "attempt.decommission-01",
+          "sourcePlanId": "plan.migration-01",
+          "sourceAttemptId": "attempt.migration-01",
+          "sourceMigrationDigest": "ec660651274013c28bef02271cee71fd85a69819fede69d60bbadca8e4c1d4c3",
+          "decommissionPlanDigest": "d79e6ce3543419bfa2ea39da4548be376cba46f6050eb9e0586457d04844ca19",
+          "approvalReceiptRef": "receipt.approval.decommission-01",
+          "approvalReceiptDigest": "63fc06d7fc59c0965eb689893cf8a6e1801203558a40b8ac6e587b4068851871",
+          "authorityEpoch": "epoch.synthetic-03",
+          "authorityGeneration": 4,
+          "authorityScopeRef": "authority-scope.synthetic-installation-01",
+          "authorityRevocationProofRef": "proof.sha256.88468b7af680adaf56fae41042c339ca1126253860c97199a4db361627515a3d",
+          "result": "causally_verified",
+          "externalState": "decommissioned_uninstalled_and_terminal_tombstone_recorded",
+          "causallyVerified": true,
+          "causalProofRef": "proof.sha256.c46f3d4a791d5079464dbe656bd1a27a81e7d062a4844749d3ecfef75d4f277f"
+        }
+      ],
+      "requiredAssertions": [
+        "show-upgrade-and-cutover",
+        "preserve-watermark-deltas-and-attempt",
+        "post-effect-cancel-not-simple-cancelled",
+        "recovery-takeover-generation-visible",
+        "forward-replay-before-cutback",
+        "authority-revocation-before-decommission",
+        "safe-uninstall-and-terminal-tombstone"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "schemaVersion": "1.0.0",
+  "rule": "These are presentation/work-distribution lenses only. Capability policy remains authoritative.",
+  "lenses": [
+    {"id": "originator", "displayName": "Loan officer / originator", "category": "loan-operations"},
+    {"id": "setup", "displayName": "Setup / intake", "category": "loan-operations"},
+    {"id": "processor", "displayName": "Processor", "category": "loan-operations"},
+    {"id": "underwriter", "displayName": "Underwriter", "category": "credit-decision"},
+    {"id": "compliance", "displayName": "Compliance", "category": "control"},
+    {"id": "closing", "displayName": "Closing", "category": "loan-operations"},
+    {"id": "funding", "displayName": "Funding", "category": "controlled-effect"},
+    {"id": "funding-control-approver", "displayName": "Funding control approver", "category": "independent-approval"},
+    {"id": "shipping", "displayName": "Shipping / post-close", "category": "post-close"},
+    {"id": "insurance", "displayName": "Insurance / guaranty", "category": "post-close"},
+    {"id": "secondary", "displayName": "Secondary / capital markets", "category": "capital-markets"},
+    {"id": "collateral", "displayName": "Collateral / appraisal desk", "category": "specialist"},
+    {"id": "manager", "displayName": "Manager / supervisor", "category": "management"},
+    {"id": "quality-control", "displayName": "Quality control", "category": "independent-review"},
+    {"id": "administrator", "displayName": "Product administrator", "category": "administration"},
+    {"id": "auditor", "displayName": "Auditor / read-only observer", "category": "independent-review"},
+    {"id": "security-administrator", "displayName": "Security and identity administrator", "category": "administration"},
+    {"id": "infrastructure-data-custodian", "displayName": "Infrastructure and data custodian", "category": "lender-custody"},
+    {"id": "separated-approver", "displayName": "Separated lifecycle approver", "category": "independent-approval"},
+    {"id": "support-recovery-operator", "displayName": "Support and recovery operator", "category": "operations"}
+  ],
+  "groups": [
+    {
+      "id": "all",
+      "lensIds": ["originator", "setup", "processor", "underwriter", "compliance", "closing", "funding", "funding-control-approver", "shipping", "insurance", "secondary", "collateral", "manager", "quality-control", "administrator", "auditor", "security-administrator", "infrastructure-data-custodian", "separated-approver", "support-recovery-operator"]
+    },
+    {
+      "id": "all-operational",
+      "lensIds": ["originator", "setup", "processor", "underwriter", "compliance", "closing", "funding", "shipping", "insurance", "secondary", "collateral"]
+    },
+    {
+      "id": "all-specialist",
+      "lensIds": ["underwriter", "compliance", "closing", "funding", "funding-control-approver", "shipping", "insurance", "secondary", "collateral", "quality-control"]
+    }
+  ]
+}

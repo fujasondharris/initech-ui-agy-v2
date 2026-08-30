@@ -1,0 +1,323 @@
+{
+  "schemaVersion": "1.0.0",
+  "rule": "Every independent build implements every scenario ID with deterministic synthetic fixtures and passed receipts.",
+  "scenarios": [
+    {
+      "id": "originator-qualification",
+      "fixtureId": "fixture.originator-qualification",
+      "roleLensIds": [
+        "originator"
+      ],
+      "outcomeState": "scenario_recorded_missing_evidence_requested_no_loan_write",
+      "outcome": "Compare qualification structures and estimated fees, preserve assumptions, and request missing evidence without implying a loan write.",
+      "requiredCausalOutcomeStates": [
+        "missing_evidence_request_created"
+      ],
+      "requiredAssertions": [
+        "compare-two-structures",
+        "show-assumptions-and-missing-borrower-evidence",
+        "request-missing-evidence",
+        "record-safe-scenario",
+        "no-loan-write"
+      ],
+      "fixtureContractDigest": "ee5638fbec8bf7d37109d8d133d62a923e346e34a1e8c48c3d929c763408cbb9"
+    },
+    {
+      "id": "setup-evidence-ambiguity",
+      "fixtureId": "fixture.setup-evidence-ambiguity",
+      "roleLensIds": [
+        "setup"
+      ],
+      "outcomeState": "handoff_ready_after_all_required_evidence_resolved",
+      "outcome": "Resolve date, signature, classification, completeness, and borrower/employer subject-binding ambiguity before handoff.",
+      "requiredCausalOutcomeStates": [
+        "date_signature_classification_completeness_duplicate_supersession_and_subject_bindings_resolved"
+      ],
+      "requiredAssertions": [
+        "show-date-mismatch",
+        "show-missing-signature",
+        "correct-misclassification",
+        "preserve-borrower-and-employer-candidates",
+        "resolve-duplicate-and-supersession",
+        "block-incomplete-handoff"
+      ],
+      "fixtureContractDigest": "6b8cd42ba701265952114f5c3ec4524d3daf67e725a790162b8ae9e54c3bd71b"
+    },
+    {
+      "id": "processor-orchestration",
+      "fixtureId": "fixture.processor-orchestration",
+      "roleLensIds": [
+        "processor",
+        "manager"
+      ],
+      "outcomeState": "supervisory_bottleneck_resolved_and_order_accepted",
+      "outcome": "Coordinate verification/service orders, appraisal, documents, conditions, deadlines, supervision, and a blocked external response.",
+      "requiredCausalOutcomeStates": [
+        "supervisory_bottleneck_resolved_and_order_accepted"
+      ],
+      "requiredAssertions": [
+        "coordinate-verification-service-appraisal-documents-and-conditions",
+        "prioritize-by-dependency-and-deadline",
+        "show-supervisor-with-minimized-data",
+        "resolve-supervisory-bottleneck",
+        "hold-until-causal-verification"
+      ],
+      "fixtureContractDigest": "1dfbbf2e75ff673e2c11d9d07c18215f8e3300c0f233fdff2cb3f3f3d00b2c78"
+    },
+    {
+      "id": "underwriter-adjudication",
+      "fixtureId": "fixture.underwriter-adjudication",
+      "roleLensIds": [
+        "underwriter",
+        "collateral",
+        "quality-control"
+      ],
+      "outcomeState": "evidence_bound_conditions_issued",
+      "outcome": "Resolve first-broken-stage income disagreement, assets, credit/liability conflict, and collateral exception with evidence-bound conditions.",
+      "requiredCausalOutcomeStates": [
+        "income_assets_liability_and_collateral_adjudicated",
+        "evidence_bound_conditions_issued"
+      ],
+      "requiredAssertions": [
+        "no-answer-is-not-zero",
+        "first-broken-stage-visible",
+        "negative-entity-match-preserved",
+        "compare-income-methods-and-source-years",
+        "large-deposit-evidence-required",
+        "independent-method-not-ground-truth",
+        "issue-evidence-bound-conditions"
+      ],
+      "fixtureContractDigest": "1575c11aab91385741b3f36ded1cb72b39634ef00156ad331437dda47bb64a8a"
+    },
+    {
+      "id": "compliance-fee-timing",
+      "fixtureId": "fixture.compliance-fee-timing",
+      "roleLensIds": [
+        "compliance",
+        "closing"
+      ],
+      "outcomeState": "closing_alert_created",
+      "outcome": "Identify and route an applicable timing, fee, or tolerance issue without presenting nonapplicable rules as passed.",
+      "requiredCausalOutcomeStates": [
+        "closing_alert_created"
+      ],
+      "requiredAssertions": [
+        "source-result-separate-from-customer-policy",
+        "unknown-not-pass",
+        "effective-version-and-inputs-visible",
+        "identify-fee-and-timing-problem",
+        "route-material-alert-to-closing"
+      ],
+      "fixtureContractDigest": "36bfb624b23772cfa8bb166e4c9facaef156c815fe13040da3e56dff76276404"
+    },
+    {
+      "id": "closing-change-readiness",
+      "fixtureId": "fixture.closing-change-readiness",
+      "roleLensIds": [
+        "closing"
+      ],
+      "outcomeState": "closing_ready_after_fee_cash_document_timing_reconciliation",
+      "outcome": "Reconcile changed fees and cash-to-close, document/timing readiness, and an approval-dependent exception, then causally rebuild the funding handoff before reporting ready.",
+      "requiredCausalOutcomeStates": [
+        "fee_cash_to_close_documents_and_timing_readiness_reconciled",
+        "funding_handoff_rebuilt_from_reconciled_closing_version"
+      ],
+      "requiredAssertions": [
+        "show-fee-and-document-version-impact",
+        "reconcile-fee-and-cash-to-close",
+        "rebuild-funding-handoff",
+        "do-not-present-ready-before-rebuild",
+        "confirm-document-and-timing-readiness-after-rebuild"
+      ],
+      "fixtureContractDigest": "fb4b83282fdb04e8329c3baf268c6eeb7390a5df764b12f1cbd6d885d5b033f4"
+    },
+    {
+      "id": "funding-effect-unknown",
+      "fixtureId": "fixture.funding-effect-unknown",
+      "roleLensIds": [
+        "funding",
+        "funding-control-approver"
+      ],
+      "outcomeState": "causally_verified_not_executed_after_effect_unknown_hold",
+      "outcome": "Block on an unsatisfied condition, obtain two distinct funding-control approvals, and hold an indeterminate disbursement effect without blind retry or false success.",
+      "requiredCausalOutcomeStates": [
+        "causally_verified_not_executed_after_effect_unknown_hold"
+      ],
+      "requiredAssertions": [
+        "unsatisfied-condition-blocks",
+        "maker-cannot-approve",
+        "two-separate-actor-and-session-bound-funding-control-approvals",
+        "immutable-plan-and-destination-binding",
+        "expiry-denial-boundaries-observed",
+        "stale-plan-changed-destination-and-reused-receipt-rejected",
+        "no-blind-retry",
+        "effect-unknown-hold",
+        "causal-proof-before-terminal"
+      ],
+      "fixtureContractDigest": "14d693d6c7e56211932e84f432b3839ba31f1182f1c6b6d9a4a292129df32e6f"
+    },
+    {
+      "id": "postclose-trailing-suspense",
+      "fixtureId": "fixture.postclose-trailing-suspense",
+      "roleLensIds": [
+        "shipping",
+        "quality-control"
+      ],
+      "outcomeState": "both_items_closed",
+      "outcome": "Resolve a trailing document and delivery/purchase suspense with separate owners and linked evidence.",
+      "requiredCausalOutcomeStates": [
+        "trailing_document_received_and_delivery_suspense_resolved"
+      ],
+      "requiredAssertions": [
+        "separate-owners",
+        "linked-evidence",
+        "packet-level-resolution",
+        "closure-requires-both-items"
+      ],
+      "fixtureContractDigest": "7cdeca267ef1b4ea430daf42ab217a90ab8e1b3665bc66858fa82ea0c02e9b01"
+    },
+    {
+      "id": "insurance-suspense",
+      "fixtureId": "fixture.insurance-suspense",
+      "roleLensIds": [
+        "insurance"
+      ],
+      "outcomeState": "resolved_after_evidence",
+      "outcome": "Resolve missing authority-required evidence and a synthetic insurance/guaranty suspense item.",
+      "requiredCausalOutcomeStates": [
+        "suspense_resolved"
+      ],
+      "requiredAssertions": [
+        "missing-evidence-not-failure-or-pass",
+        "authority-version-visible",
+        "cure-owner-visible",
+        "resolve-only-after-evidence"
+      ],
+      "fixtureContractDigest": "f7bd00e378a01c37c6538a45dd943cdc9d367b18c3a055b00ffc0c0997d0ae2d"
+    },
+    {
+      "id": "secondary-expiration-delivery",
+      "fixtureId": "fixture.secondary-expiration-delivery",
+      "roleLensIds": [
+        "secondary"
+      ],
+      "outcomeState": "secondary_complete_after_purchase_advice_reconciliation",
+      "outcome": "Manage an expiring lock/commitment, extension, allocation, delivery, and purchase-advice reconciliation with minimized data.",
+      "requiredCausalOutcomeStates": [
+        "extension_confirmed_and_delivery_allocated",
+        "purchase_advice_reconciled"
+      ],
+      "requiredAssertions": [
+        "deadline-and-cost-visible",
+        "extension-decision-audited",
+        "minimize-loan-data",
+        "allocation-and-delivery-visible",
+        "reconcile-purchase-advice"
+      ],
+      "fixtureContractDigest": "d42e6712c1c87c03f024628b8addf90a78d264fcde0e79ce8eea506373de891a"
+    },
+    {
+      "id": "handoff-reject-repair",
+      "fixtureId": "fixture.handoff-reject-repair",
+      "roleLensIds": [
+        "originator",
+        "setup",
+        "processor",
+        "underwriter",
+        "closing"
+      ],
+      "outcomeState": "handoff_v2_acknowledgement_audited_with_both_versions",
+      "outcome": "Reject handoff v1, causally repair it as digest-bound v2, causally acknowledge v2, and preserve both versions and the acknowledgement in audit.",
+      "requiredCausalOutcomeStates": [
+        "handoff_v2_repaired_from_v1",
+        "handoff_v2_acknowledged"
+      ],
+      "requiredAssertions": [
+        "preserve-v1-and-v2",
+        "rejection-reason-actionable",
+        "version-and-repair-digest-bound-before-acknowledgement",
+        "acknowledgement-audited"
+      ],
+      "fixtureContractDigest": "d1060da0b5deefc5ffd2d2ca6c2c6ba0d5ca9a3f328d63d32c890550227aa29f"
+    },
+    {
+      "id": "role-configuration-no-authority",
+      "fixtureId": "fixture.role-configuration-no-authority",
+      "roleLensIds": [
+        "administrator",
+        "security-administrator",
+        "auditor"
+      ],
+      "outcomeState": "capabilities_unchanged_and_hidden_field_inaccessible",
+      "outcome": "Rename/combine role lenses and configure queues/terminology without changing capability or injecting executable UI.",
+      "requiredCausalOutcomeStates": [
+        "presentation_configuration_applied"
+      ],
+      "requiredAssertions": [
+        "rename-combine-map-terminology-and-density",
+        "configuration-does-not-grant-authority",
+        "untrusted-label-not-executable",
+        "inaccessible-not-absent"
+      ],
+      "fixtureContractDigest": "58b4f0fc4b53103a02e4decec97fbaf491d50e6c7b038fa59a5ce6562cdcad1c"
+    },
+    {
+      "id": "install-fresh-vs-adoption",
+      "fixtureId": "fixture.install-fresh-vs-adoption",
+      "roleLensIds": [
+        "administrator",
+        "infrastructure-data-custodian",
+        "separated-approver",
+        "support-recovery-operator"
+      ],
+      "outcomeState": "ready_with_limitations_not_ready",
+      "outcome": "Branch fresh versus first-adoption mode, require custody and external authority/root inputs, fail preflight, resume interruption, and prove READY_WITH_LIMITATIONS honestly.",
+      "requiredCausalOutcomeStates": [
+        "fresh_install_dry_run_verified_no_external_effect",
+        "partial_install_effect_reconciled",
+        "ready_with_limitations"
+      ],
+      "requiredAssertions": [
+        "fresh-and-adoption-branch",
+        "authority-root-fails-closed",
+        "supply-custody-and-external-authority-evidence",
+        "resolve-failed-preflight",
+        "resume-without-secret",
+        "limitations-not-ready"
+      ],
+      "fixtureContractDigest": "78f29d62a390c74bbf47abafcb40ff414ae6c2ece5989c7fbe7f32bda52e9d8f"
+    },
+    {
+      "id": "lifecycle-migration-recovery",
+      "fixtureId": "fixture.lifecycle-migration-recovery",
+      "roleLensIds": [
+        "administrator",
+        "security-administrator",
+        "infrastructure-data-custodian",
+        "separated-approver",
+        "support-recovery-operator",
+        "auditor"
+      ],
+      "outcomeState": "decommissioned_uninstalled_and_terminal_tombstone_recorded",
+      "outcome": "Exercise upgrade, migration/cutover/cutback, cancellation after effect, recovery/takeover, authority revocation, safe decommission/uninstall, and tombstone evidence.",
+      "requiredCausalOutcomeStates": [
+        "cutover_started_partial_effect_observed",
+        "takeover_generation_4_activated",
+        "forward_replay_completed",
+        "cutback_reconciled_and_restored_consistent",
+        "prior_authority_revoked_and_rejected",
+        "decommissioned_uninstalled_and_terminal_tombstone_recorded"
+      ],
+      "requiredAssertions": [
+        "show-upgrade-and-cutover",
+        "preserve-watermark-deltas-and-attempt",
+        "post-effect-cancel-not-simple-cancelled",
+        "recovery-takeover-generation-visible",
+        "forward-replay-before-cutback",
+        "authority-revocation-before-decommission",
+        "safe-uninstall-and-terminal-tombstone"
+      ],
+      "fixtureContractDigest": "2a32a267f547bd58cc95b1bedec3333ec99277b261ddff30cc79ea7b031e8653"
+    }
+  ]
+}

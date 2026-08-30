@@ -1,0 +1,1 @@
+{"comparisonFixtureId":"fixture.postclose-trailing-suspense","fixturePackDigest":"a369f5aa1b1f82f375f240573fb8e17e9b7b1e67dbca26c0a2d0899978741ed6","observedMockSequence":[],"result":"PASSED","satisfiedAssertions":["separate-owners","linked-evidence","packet-level-resolution","closure-requires-both-items"],"scenarioId":"postclose-trailing-suspense","schemaVersion":"1.0.0"}

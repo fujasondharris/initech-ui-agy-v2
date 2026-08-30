@@ -1,0 +1,1771 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "schemaVersion": "1.0.0",
+  "purpose": "Complete 70-item neutral behavior inventory for Initech UI reference build v2",
+  "items": [
+    {
+      "id": "WORK-001",
+      "area": "work-management",
+      "capability": "Role-adaptive home, work queues, assignments, priorities, SLA clocks, dependencies, escalation, saved views, and explainable task generation",
+      "primaryLenses": [
+        "all-operational",
+        "manager"
+      ],
+      "disposition": "implemented",
+      "rationale": "Modeled through provider-neutral typed contracts, role lenses, and executable test suites for work-management operations.",
+      "routeOrSurfaceIds": [
+        "surface.work.management",
+        "surface.task-frame"
+      ],
+      "contractIds": [
+        "contract.work.management",
+        "contract.work-item"
+      ],
+      "scenarioOrTestIds": [
+        "test.work-001",
+        "test.retention-coverage"
+      ],
+      "releaseCommit": "HEAD"
+    },
+    {
+      "id": "WORK-002",
+      "area": "work-management",
+      "capability": "Global search, command palette, recent context, entitlement-safe deep links, keyboard navigation, and configurable density",
+      "primaryLenses": [
+        "all"
+      ],
+      "disposition": "implemented",
+      "rationale": "Modeled through provider-neutral typed contracts, role lenses, and executable test suites for work-management operations.",
+      "routeOrSurfaceIds": [
+        "surface.work.management",
+        "surface.task-frame"
+      ],
+      "contractIds": [
+        "contract.work.management",
+        "contract.work-item"
+      ],
+      "scenarioOrTestIds": [
+        "test.work-002",
+        "test.retention-coverage"
+      ],
+      "releaseCommit": "HEAD"
+    },
+    {
+      "id": "WORK-003",
+      "area": "collaboration",
+      "capability": "Loan-scoped notes, messages, mentions, watchers, notifications, and attributed activity",
+      "primaryLenses": [
+        "originator",
+        "setup",
+        "processor",
+        "underwriter",
+        "closing",
+        "manager"
+      ],
+      "disposition": "implemented",
+      "rationale": "Modeled through provider-neutral typed contracts, role lenses, and executable test suites for collaboration operations.",
+      "routeOrSurfaceIds": [
+        "surface.collaboration",
+        "surface.task-frame"
+      ],
+      "contractIds": [
+        "contract.collaboration",
+        "contract.work-item"
+      ],
+      "scenarioOrTestIds": [
+        "test.work-003",
+        "test.retention-coverage"
+      ],
+      "releaseCommit": "HEAD"
+    },
+    {
+      "id": "WORK-004",
+      "area": "handoff",
+      "capability": "Versioned cross-role handoff packets with required evidence, decisions, open work, acknowledgement, rejection, and repair",
+      "primaryLenses": [
+        "all-operational"
+      ],
+      "disposition": "implemented",
+      "rationale": "Modeled through provider-neutral typed contracts, role lenses, and executable test suites for handoff operations.",
+      "routeOrSurfaceIds": [
+        "surface.handoff",
+        "surface.task-frame"
+      ],
+      "contractIds": [
+        "contract.handoff",
+        "contract.work-item"
+      ],
+      "scenarioOrTestIds": [
+        "test.work-004",
+        "test.retention-coverage"
+      ],
+      "releaseCommit": "HEAD"
+    },
+    {
+      "id": "LOAN-001",
+      "area": "loan-context",
+      "capability": "Configurable loan banner/summary with lifecycle, ownership, critical dates, product, property, alerts, source version, and freshness",
+      "primaryLenses": [
+        "all-operational"
+      ],
+      "disposition": "implemented",
+      "rationale": "Modeled through provider-neutral typed contracts, role lenses, and executable test suites for loan-context operations.",
+      "routeOrSurfaceIds": [
+        "surface.loan.context",
+        "surface.task-frame"
+      ],
+      "contractIds": [
+        "contract.loan.context",
+        "contract.work-item"
+      ],
+      "scenarioOrTestIds": [
+        "test.loan-001",
+        "test.retention-coverage"
+      ],
+      "releaseCommit": "HEAD"
+    },
+    {
+      "id": "LOAN-002",
+      "area": "application",
+      "capability": "Borrower, co-borrower, declarations, demographics where authorized, contact, transaction, occupancy, purpose, and application completeness",
+      "primaryLenses": [
+        "originator",
+        "setup",
+        "processor",
+        "underwriter"
+      ],
+      "disposition": "implemented",
+      "rationale": "Modeled through provider-neutral typed contracts, role lenses, and executable test suites for application operations.",
+      "routeOrSurfaceIds": [
+        "surface.application",
+        "surface.task-frame"
+      ],
+      "contractIds": [
+        "contract.application",
+        "contract.work-item"
+      ],
+      "scenarioOrTestIds": [
+        "test.loan-002",
+        "test.retention-coverage"
+      ],
+      "releaseCommit": "HEAD"
+    },
+    {
+      "id": "LOAN-003",
+      "area": "identity",
+      "capability": "Stable local entity identity, source links, aliases, merge/split/tombstone history, and borrower/employer/property subject binding",
+      "primaryLenses": [
+        "setup",
+        "processor",
+        "underwriter",
+        "auditor"
+      ],
+      "disposition": "implemented",
+      "rationale": "Modeled through provider-neutral typed contracts, role lenses, and executable test suites for identity operations.",
+      "routeOrSurfaceIds": [
+        "surface.identity",
+        "surface.task-frame"
+      ],
+      "contractIds": [
+        "contract.identity",
+        "contract.work-item"
+      ],
+      "scenarioOrTestIds": [
+        "test.loan-003",
+        "test.retention-coverage"
+      ],
+      "releaseCommit": "HEAD"
+    },
+    {
+      "id": "LOAN-004",
+      "area": "lifecycle",
+      "capability": "Milestones, critical dates, material changes, readiness, owners, dependencies, and lifecycle transitions",
+      "primaryLenses": [
+        "originator",
+        "processor",
+        "underwriter",
+        "closing",
+        "funding",
+        "manager"
+      ],
+      "disposition": "implemented",
+      "rationale": "Modeled through provider-neutral typed contracts, role lenses, and executable test suites for lifecycle operations.",
+      "routeOrSurfaceIds": [
+        "surface.lifecycle",
+        "surface.task-frame"
+      ],
+      "contractIds": [
+        "contract.lifecycle",
+        "contract.work-item"
+      ],
+      "scenarioOrTestIds": [
+        "test.loan-004",
+        "test.retention-coverage"
+      ],
+      "releaseCommit": "HEAD"
+    },
+    {
+      "id": "SCEN-001",
+      "area": "scenarios",
+      "capability": "Qualification and loan-structure scenarios with versioned assumptions, comparison, selected scenario, and non-authoritative status",
+      "primaryLenses": [
+        "originator",
+        "processor",
+        "underwriter"
+      ],
+      "disposition": "implemented",
+      "rationale": "Modeled through provider-neutral typed contracts, role lenses, and executable test suites for scenarios operations.",
+      "routeOrSurfaceIds": [
+        "surface.scenarios",
+        "surface.task-frame"
+      ],
+      "contractIds": [
+        "contract.scenarios",
+        "contract.work-item"
+      ],
+      "scenarioOrTestIds": [
+        "test.scen-001",
+        "test.retention-coverage"
+      ],
+      "releaseCommit": "HEAD"
+    },
+    {
+      "id": "CRED-001",
+      "area": "credit-liabilities",
+      "capability": "Credit observations, reports, scores, liabilities, payments, ownership, exclusions, disputes, duplicates, and evidence",
+      "primaryLenses": [
+        "setup",
+        "processor",
+        "underwriter"
+      ],
+      "disposition": "implemented",
+      "rationale": "Modeled through provider-neutral typed contracts, role lenses, and executable test suites for credit-liabilities operations.",
+      "routeOrSurfaceIds": [
+        "surface.credit.liabilities",
+        "surface.task-frame"
+      ],
+      "contractIds": [
+        "contract.credit.liabilities",
+        "contract.work-item"
+      ],
+      "scenarioOrTestIds": [
+        "test.cred-001",
+        "test.retention-coverage"
+      ],
+      "releaseCommit": "HEAD"
+    },
+    {
+      "id": "CRED-002",
+      "area": "credit-liabilities",
+      "capability": "Credit-to-application reconciliation and detection of source/application conflicts",
+      "primaryLenses": [
+        "setup",
+        "processor",
+        "underwriter",
+        "quality-control"
+      ],
+      "disposition": "implemented",
+      "rationale": "Modeled through provider-neutral typed contracts, role lenses, and executable test suites for credit-liabilities operations.",
+      "routeOrSurfaceIds": [
+        "surface.credit.liabilities",
+        "surface.task-frame"
+      ],
+      "contractIds": [
+        "contract.credit.liabilities",
+        "contract.work-item"
+      ],
+      "scenarioOrTestIds": [
+        "test.cred-002",
+        "test.retention-coverage"
+      ],
+      "releaseCommit": "HEAD"
+    },
+    {
+      "id": "INCM-001",
+      "area": "income-employment",
+      "capability": "Employer and income-source inventory with borrower binding, employment dates, status, pay frequency, source documents, and selected amount",
+      "primaryLenses": [
+        "setup",
+        "processor",
+        "underwriter"
+      ],
+      "disposition": "implemented",
+      "rationale": "Modeled through provider-neutral typed contracts, role lenses, and executable test suites for income-employment operations.",
+      "routeOrSurfaceIds": [
+        "surface.income.employment",
+        "surface.task-frame"
+      ],
+      "contractIds": [
+        "contract.income.employment",
+        "contract.work-item"
+      ],
+      "scenarioOrTestIds": [
+        "test.incm-001",
+        "test.retention-coverage"
+      ],
+      "releaseCommit": "HEAD"
+    },
+    {
+      "id": "INCM-002",
+      "area": "income-employment",
+      "capability": "Deterministic wage, salary, hourly, overtime, bonus, commission, variable, fixed, self-employment, rental, military, and other income method workbenches",
+      "primaryLenses": [
+        "underwriter",
+        "processor"
+      ],
+      "disposition": "implemented",
+      "rationale": "Modeled through provider-neutral typed contracts, role lenses, and executable test suites for income-employment operations.",
+      "routeOrSurfaceIds": [
+        "surface.income.employment",
+        "surface.task-frame"
+      ],
+      "contractIds": [
+        "contract.income.employment",
+        "contract.work-item"
+      ],
+      "scenarioOrTestIds": [
+        "test.incm-002",
+        "test.retention-coverage"
+      ],
+      "releaseCommit": "HEAD"
+    },
+    {
+      "id": "INCM-003",
+      "area": "income-employment",
+      "capability": "YTD/prior-year/tax-year comparisons, trends, continuance/applicability, source-period coverage, and authority/lender-overlay context",
+      "primaryLenses": [
+        "underwriter"
+      ],
+      "disposition": "implemented",
+      "rationale": "Modeled through provider-neutral typed contracts, role lenses, and executable test suites for income-employment operations.",
+      "routeOrSurfaceIds": [
+        "surface.income.employment",
+        "surface.task-frame"
+      ],
+      "contractIds": [
+        "contract.income.employment",
+        "contract.work-item"
+      ],
+      "scenarioOrTestIds": [
+        "test.incm-003",
+        "test.retention-coverage"
+      ],
+      "releaseCommit": "HEAD"
+    },
+    {
+      "id": "INCM-004",
+      "area": "income-employment",
+      "capability": "Income derivation graph, lineage, competing calculations, disagreement investigation, independent adjudication, and promoted result",
+      "primaryLenses": [
+        "underwriter",
+        "quality-control",
+        "auditor"
+      ],
+      "disposition": "implemented",
+      "rationale": "Modeled through provider-neutral typed contracts, role lenses, and executable test suites for income-employment operations.",
+      "routeOrSurfaceIds": [
+        "surface.income.employment",
+        "surface.task-frame"
+      ],
+      "contractIds": [
+        "contract.income.employment",
+        "contract.work-item"
+      ],
+      "scenarioOrTestIds": [
+        "test.incm-004",
+        "test.retention-coverage"
+      ],
+      "releaseCommit": "HEAD"
+    },
+    {
+      "id": "INCM-005",
+      "area": "income-employment",
+      "capability": "Withholding, obligations, government-program residual-income and related worksheets rendered from applicable authority metadata",
+      "primaryLenses": [
+        "underwriter"
+      ],
+      "disposition": "implemented",
+      "rationale": "Modeled through provider-neutral typed contracts, role lenses, and executable test suites for income-employment operations.",
+      "routeOrSurfaceIds": [
+        "surface.income.employment",
+        "surface.task-frame"
+      ],
+      "contractIds": [
+        "contract.income.employment",
+        "contract.work-item"
+      ],
+      "scenarioOrTestIds": [
+        "test.incm-005",
+        "test.retention-coverage"
+      ],
+      "releaseCommit": "HEAD"
+    },
+    {
+      "id": "ASET-001",
+      "area": "assets",
+      "capability": "Accounts, other assets, gifts/grants, funds to close, reserves, eligibility, ownership, evidence, and large-deposit review",
+      "primaryLenses": [
+        "setup",
+        "processor",
+        "underwriter",
+        "closing"
+      ],
+      "disposition": "implemented",
+      "rationale": "Modeled through provider-neutral typed contracts, role lenses, and executable test suites for assets operations.",
+      "routeOrSurfaceIds": [
+        "surface.assets",
+        "surface.task-frame"
+      ],
+      "contractIds": [
+        "contract.assets",
+        "contract.work-item"
+      ],
+      "scenarioOrTestIds": [
+        "test.aset-001",
+        "test.retention-coverage"
+      ],
+      "releaseCommit": "HEAD"
+    },
+    {
+      "id": "ASET-002",
+      "area": "assets",
+      "capability": "Statement transaction extraction and reconciliation with duplicate, transfer, payroll, liability, and unexplained-funds candidates",
+      "primaryLenses": [
+        "processor",
+        "underwriter",
+        "quality-control"
+      ],
+      "disposition": "implemented",
+      "rationale": "Modeled through provider-neutral typed contracts, role lenses, and executable test suites for assets operations.",
+      "routeOrSurfaceIds": [
+        "surface.assets",
+        "surface.task-frame"
+      ],
+      "contractIds": [
+        "contract.assets",
+        "contract.work-item"
+      ],
+      "scenarioOrTestIds": [
+        "test.aset-002",
+        "test.retention-coverage"
+      ],
+      "releaseCommit": "HEAD"
+    },
+    {
+      "id": "PROP-001",
+      "area": "property-collateral",
+      "capability": "Subject property, transaction, occupancy, flood, title, insurance, project/condominium, and collateral evidence",
+      "primaryLenses": [
+        "setup",
+        "processor",
+        "underwriter",
+        "collateral",
+        "closing"
+      ],
+      "disposition": "implemented",
+      "rationale": "Modeled through provider-neutral typed contracts, role lenses, and executable test suites for property-collateral operations.",
+      "routeOrSurfaceIds": [
+        "surface.property.collateral",
+        "surface.task-frame"
+      ],
+      "contractIds": [
+        "contract.property.collateral",
+        "contract.work-item"
+      ],
+      "scenarioOrTestIds": [
+        "test.prop-001",
+        "test.retention-coverage"
+      ],
+      "releaseCommit": "HEAD"
+    },
+    {
+      "id": "PROP-002",
+      "area": "property-collateral",
+      "capability": "Real-estate-owned schedule with participation, liens, payment, tax/insurance/association expense, rental treatment, income/loss, and evidence",
+      "primaryLenses": [
+        "processor",
+        "underwriter"
+      ],
+      "disposition": "implemented",
+      "rationale": "Modeled through provider-neutral typed contracts, role lenses, and executable test suites for property-collateral operations.",
+      "routeOrSurfaceIds": [
+        "surface.property.collateral",
+        "surface.task-frame"
+      ],
+      "contractIds": [
+        "contract.property.collateral",
+        "contract.work-item"
+      ],
+      "scenarioOrTestIds": [
+        "test.prop-002",
+        "test.retention-coverage"
+      ],
+      "releaseCommit": "HEAD"
+    },
+    {
+      "id": "APPR-001",
+      "area": "appraisal-valuation",
+      "capability": "Appraisal/valuation order, consent, status, assignment, due date, version, report, structured quality findings, and delivery",
+      "primaryLenses": [
+        "processor",
+        "collateral",
+        "underwriter"
+      ],
+      "disposition": "implemented",
+      "rationale": "Modeled through provider-neutral typed contracts, role lenses, and executable test suites for appraisal-valuation operations.",
+      "routeOrSurfaceIds": [
+        "surface.appraisal.valuation",
+        "surface.task-frame"
+      ],
+      "contractIds": [
+        "contract.appraisal.valuation",
+        "contract.work-item"
+      ],
+      "scenarioOrTestIds": [
+        "test.appr-001",
+        "test.retention-coverage"
+      ],
+      "releaseCommit": "HEAD"
+    },
+    {
+      "id": "APPR-002",
+      "area": "appraisal-valuation",
+      "capability": "Valuation review, property/comparable conflicts, reconsideration request and evidence, independence controls, response, and resolution",
+      "primaryLenses": [
+        "collateral",
+        "underwriter",
+        "compliance"
+      ],
+      "disposition": "implemented",
+      "rationale": "Modeled through provider-neutral typed contracts, role lenses, and executable test suites for appraisal-valuation operations.",
+      "routeOrSurfaceIds": [
+        "surface.appraisal.valuation",
+        "surface.task-frame"
+      ],
+      "contractIds": [
+        "contract.appraisal.valuation",
+        "contract.work-item"
+      ],
+      "scenarioOrTestIds": [
+        "test.appr-002",
+        "test.retention-coverage"
+      ],
+      "releaseCommit": "HEAD"
+    },
+    {
+      "id": "DOCS-001",
+      "area": "documents-evidence",
+      "capability": "Document repository and packet inventory, upload/intake, classification, page/rendition, subject binding, duplicate/supersession, access, and retention metadata",
+      "primaryLenses": [
+        "setup",
+        "processor",
+        "underwriter",
+        "closing",
+        "shipping"
+      ],
+      "disposition": "implemented",
+      "rationale": "Modeled through provider-neutral typed contracts, role lenses, and executable test suites for documents-evidence operations.",
+      "routeOrSurfaceIds": [
+        "surface.documents.evidence",
+        "surface.task-frame"
+      ],
+      "contractIds": [
+        "contract.documents.evidence",
+        "contract.work-item"
+      ],
+      "scenarioOrTestIds": [
+        "test.docs-001",
+        "test.retention-coverage"
+      ],
+      "releaseCommit": "HEAD"
+    },
+    {
+      "id": "DOCS-002",
+      "area": "documents-evidence",
+      "capability": "Exact document rendition and extraction candidates beside the facts they support, with page/coordinate/text/table locator and derivation evidence",
+      "primaryLenses": [
+        "setup",
+        "processor",
+        "underwriter",
+        "quality-control"
+      ],
+      "disposition": "implemented",
+      "rationale": "Modeled through provider-neutral typed contracts, role lenses, and executable test suites for documents-evidence operations.",
+      "routeOrSurfaceIds": [
+        "surface.documents.evidence",
+        "surface.task-frame"
+      ],
+      "contractIds": [
+        "contract.documents.evidence",
+        "contract.work-item"
+      ],
+      "scenarioOrTestIds": [
+        "test.docs-002",
+        "test.retention-coverage"
+      ],
+      "releaseCommit": "HEAD"
+    },
+    {
+      "id": "DOCS-003",
+      "area": "documents-evidence",
+      "capability": "Accept, correct, reject, escalate, and independently adjudicate extraction candidates with append-only review history",
+      "primaryLenses": [
+        "setup",
+        "processor",
+        "underwriter",
+        "quality-control"
+      ],
+      "disposition": "implemented",
+      "rationale": "Modeled through provider-neutral typed contracts, role lenses, and executable test suites for documents-evidence operations.",
+      "routeOrSurfaceIds": [
+        "surface.documents.evidence",
+        "surface.task-frame"
+      ],
+      "contractIds": [
+        "contract.documents.evidence",
+        "contract.work-item"
+      ],
+      "scenarioOrTestIds": [
+        "test.docs-003",
+        "test.retention-coverage"
+      ],
+      "releaseCommit": "HEAD"
+    },
+    {
+      "id": "DOCS-004",
+      "area": "documents-evidence",
+      "capability": "Date, signature, expiration, coverage-period, page-count, missing-page, and cross-document consistency checks",
+      "primaryLenses": [
+        "setup",
+        "processor",
+        "compliance",
+        "closing",
+        "shipping"
+      ],
+      "disposition": "implemented",
+      "rationale": "Modeled through provider-neutral typed contracts, role lenses, and executable test suites for documents-evidence operations.",
+      "routeOrSurfaceIds": [
+        "surface.documents.evidence",
+        "surface.task-frame"
+      ],
+      "contractIds": [
+        "contract.documents.evidence",
+        "contract.work-item"
+      ],
+      "scenarioOrTestIds": [
+        "test.docs-004",
+        "test.retention-coverage"
+      ],
+      "releaseCommit": "HEAD"
+    },
+    {
+      "id": "SERV-001",
+      "area": "service-orders",
+      "capability": "Service/verification order catalog, consent, prerequisites, request, status, partial result, cancellation, compensation, and evidence",
+      "primaryLenses": [
+        "setup",
+        "processor",
+        "closing"
+      ],
+      "disposition": "implemented",
+      "rationale": "Modeled through provider-neutral typed contracts, role lenses, and executable test suites for service-orders operations.",
+      "routeOrSurfaceIds": [
+        "surface.service.orders",
+        "surface.task-frame"
+      ],
+      "contractIds": [
+        "contract.service.orders",
+        "contract.work-item"
+      ],
+      "scenarioOrTestIds": [
+        "test.serv-001",
+        "test.retention-coverage"
+      ],
+      "releaseCommit": "HEAD"
+    },
+    {
+      "id": "DECN-001",
+      "area": "eligibility-decisions",
+      "capability": "Automated decision/eligibility submissions, findings, granted relief, conditions, engine/authority comparison, and source versions",
+      "primaryLenses": [
+        "processor",
+        "underwriter"
+      ],
+      "disposition": "implemented",
+      "rationale": "Modeled through provider-neutral typed contracts, role lenses, and executable test suites for eligibility-decisions operations.",
+      "routeOrSurfaceIds": [
+        "surface.eligibility.decisions",
+        "surface.task-frame"
+      ],
+      "contractIds": [
+        "contract.eligibility.decisions",
+        "contract.work-item"
+      ],
+      "scenarioOrTestIds": [
+        "test.decn-001",
+        "test.retention-coverage"
+      ],
+      "releaseCommit": "HEAD"
+    },
+    {
+      "id": "DECN-002",
+      "area": "eligibility-decisions",
+      "capability": "Material-change detection, dependent-decision invalidation, rerun planning, approval, submission, and result comparison",
+      "primaryLenses": [
+        "originator",
+        "processor",
+        "underwriter",
+        "closing"
+      ],
+      "disposition": "implemented",
+      "rationale": "Modeled through provider-neutral typed contracts, role lenses, and executable test suites for eligibility-decisions operations.",
+      "routeOrSurfaceIds": [
+        "surface.eligibility.decisions",
+        "surface.task-frame"
+      ],
+      "contractIds": [
+        "contract.eligibility.decisions",
+        "contract.work-item"
+      ],
+      "scenarioOrTestIds": [
+        "test.decn-002",
+        "test.retention-coverage"
+      ],
+      "releaseCommit": "HEAD"
+    },
+    {
+      "id": "COND-001",
+      "area": "conditions",
+      "capability": "Condition board, prior-to grouping, source library, ownership, due dates, evidence, add/edit, status, reject/waive reason, and history",
+      "primaryLenses": [
+        "processor",
+        "underwriter",
+        "closing",
+        "funding"
+      ],
+      "disposition": "implemented",
+      "rationale": "Modeled through provider-neutral typed contracts, role lenses, and executable test suites for conditions operations.",
+      "routeOrSurfaceIds": [
+        "surface.conditions",
+        "surface.task-frame"
+      ],
+      "contractIds": [
+        "contract.conditions",
+        "contract.work-item"
+      ],
+      "scenarioOrTestIds": [
+        "test.cond-001",
+        "test.retention-coverage"
+      ],
+      "releaseCommit": "HEAD"
+    },
+    {
+      "id": "FIND-001",
+      "area": "findings-exceptions",
+      "capability": "Unified finding/exception model with source, severity, applicability, authority, owner, remediation, approval, and closure evidence",
+      "primaryLenses": [
+        "all-specialist",
+        "manager",
+        "quality-control"
+      ],
+      "disposition": "implemented",
+      "rationale": "Modeled through provider-neutral typed contracts, role lenses, and executable test suites for findings-exceptions operations.",
+      "routeOrSurfaceIds": [
+        "surface.findings.exceptions",
+        "surface.task-frame"
+      ],
+      "contractIds": [
+        "contract.findings.exceptions",
+        "contract.work-item"
+      ],
+      "scenarioOrTestIds": [
+        "test.find-001",
+        "test.retention-coverage"
+      ],
+      "releaseCommit": "HEAD"
+    },
+    {
+      "id": "PRIC-001",
+      "area": "pricing-lock",
+      "capability": "Pricing scenarios, request/response provenance, rate/price/payment comparison, lock request, approval, confirmation, expiration, extension, relock, and float-down request states",
+      "primaryLenses": [
+        "originator",
+        "secondary",
+        "processor"
+      ],
+      "disposition": "implemented",
+      "rationale": "Modeled through provider-neutral typed contracts, role lenses, and executable test suites for pricing-lock operations.",
+      "routeOrSurfaceIds": [
+        "surface.pricing.lock",
+        "surface.task-frame"
+      ],
+      "contractIds": [
+        "contract.pricing.lock",
+        "contract.work-item"
+      ],
+      "scenarioOrTestIds": [
+        "test.pric-001",
+        "test.retention-coverage"
+      ],
+      "releaseCommit": "HEAD"
+    },
+    {
+      "id": "FEES-001",
+      "area": "fees-cash",
+      "capability": "Fee lines, payer allocations, parties, estimates, tolerance/authority metadata, credits, rollups, and version comparison",
+      "primaryLenses": [
+        "originator",
+        "processor",
+        "compliance",
+        "closing"
+      ],
+      "disposition": "implemented",
+      "rationale": "Modeled through provider-neutral typed contracts, role lenses, and executable test suites for fees-cash operations.",
+      "routeOrSurfaceIds": [
+        "surface.fees.cash",
+        "surface.task-frame"
+      ],
+      "contractIds": [
+        "contract.fees.cash",
+        "contract.work-item"
+      ],
+      "scenarioOrTestIds": [
+        "test.fees-001",
+        "test.retention-coverage"
+      ],
+      "releaseCommit": "HEAD"
+    },
+    {
+      "id": "FEES-002",
+      "area": "fees-cash",
+      "capability": "Three-party or multi-authority fee-control decisions with exact version, scope, lock/approval ownership, and audit",
+      "primaryLenses": [
+        "processor",
+        "compliance",
+        "closing",
+        "manager"
+      ],
+      "disposition": "implemented",
+      "rationale": "Modeled through provider-neutral typed contracts, role lenses, and executable test suites for fees-cash operations.",
+      "routeOrSurfaceIds": [
+        "surface.fees.cash",
+        "surface.task-frame"
+      ],
+      "contractIds": [
+        "contract.fees.cash",
+        "contract.work-item"
+      ],
+      "scenarioOrTestIds": [
+        "test.fees-002",
+        "test.retention-coverage"
+      ],
+      "releaseCommit": "HEAD"
+    },
+    {
+      "id": "FEES-003",
+      "area": "fees-cash",
+      "capability": "Cash-to-close, funds-source, controlling-document reconciliation, and before/after change explanation",
+      "primaryLenses": [
+        "originator",
+        "processor",
+        "underwriter",
+        "closing",
+        "funding"
+      ],
+      "disposition": "implemented",
+      "rationale": "Modeled through provider-neutral typed contracts, role lenses, and executable test suites for fees-cash operations.",
+      "routeOrSurfaceIds": [
+        "surface.fees.cash",
+        "surface.task-frame"
+      ],
+      "contractIds": [
+        "contract.fees.cash",
+        "contract.work-item"
+      ],
+      "scenarioOrTestIds": [
+        "test.fees-003",
+        "test.retention-coverage"
+      ],
+      "releaseCommit": "HEAD"
+    },
+    {
+      "id": "DISC-001",
+      "area": "disclosures-forms",
+      "capability": "Form/disclosure inventory, generation request, delivery, acknowledgement, version, timing, changed circumstance, and redisclosure readiness",
+      "primaryLenses": [
+        "originator",
+        "processor",
+        "compliance",
+        "closing"
+      ],
+      "disposition": "implemented",
+      "rationale": "Modeled through provider-neutral typed contracts, role lenses, and executable test suites for disclosures-forms operations.",
+      "routeOrSurfaceIds": [
+        "surface.disclosures.forms",
+        "surface.task-frame"
+      ],
+      "contractIds": [
+        "contract.disclosures.forms",
+        "contract.work-item"
+      ],
+      "scenarioOrTestIds": [
+        "test.disc-001",
+        "test.retention-coverage"
+      ],
+      "releaseCommit": "HEAD"
+    },
+    {
+      "id": "COMP-001",
+      "area": "compliance",
+      "capability": "Applicable rule/check findings with public-authority or lender-overlay source, effective version, inputs, timing, result, cure, and approval",
+      "primaryLenses": [
+        "compliance",
+        "closing",
+        "quality-control"
+      ],
+      "disposition": "implemented",
+      "rationale": "Modeled through provider-neutral typed contracts, role lenses, and executable test suites for compliance operations.",
+      "routeOrSurfaceIds": [
+        "surface.compliance",
+        "surface.task-frame"
+      ],
+      "contractIds": [
+        "contract.compliance",
+        "contract.work-item"
+      ],
+      "scenarioOrTestIds": [
+        "test.comp-001",
+        "test.retention-coverage"
+      ],
+      "releaseCommit": "HEAD"
+    },
+    {
+      "id": "COMP-002",
+      "area": "compliance",
+      "capability": "Fee/tolerance, finance-charge/APR, timing, cure, exception, approval, and audit workflows",
+      "primaryLenses": [
+        "compliance",
+        "closing"
+      ],
+      "disposition": "implemented",
+      "rationale": "Modeled through provider-neutral typed contracts, role lenses, and executable test suites for compliance operations.",
+      "routeOrSurfaceIds": [
+        "surface.compliance",
+        "surface.task-frame"
+      ],
+      "contractIds": [
+        "contract.compliance",
+        "contract.work-item"
+      ],
+      "scenarioOrTestIds": [
+        "test.comp-002",
+        "test.retention-coverage"
+      ],
+      "releaseCommit": "HEAD"
+    },
+    {
+      "id": "COMP-003",
+      "area": "compliance",
+      "capability": "Authorized party/sanctions screening with per-list result, subject resolution, evidence, false-positive review, and expiration",
+      "primaryLenses": [
+        "compliance",
+        "closing",
+        "funding"
+      ],
+      "disposition": "implemented",
+      "rationale": "Modeled through provider-neutral typed contracts, role lenses, and executable test suites for compliance operations.",
+      "routeOrSurfaceIds": [
+        "surface.compliance",
+        "surface.task-frame"
+      ],
+      "contractIds": [
+        "contract.compliance",
+        "contract.work-item"
+      ],
+      "scenarioOrTestIds": [
+        "test.comp-003",
+        "test.retention-coverage"
+      ],
+      "releaseCommit": "HEAD"
+    },
+    {
+      "id": "CLOS-001",
+      "area": "closing",
+      "capability": "Closing schedule, parties, documents, signatures, final terms, fees/cash, approval/timing readiness, and exceptions",
+      "primaryLenses": [
+        "closing",
+        "processor",
+        "compliance"
+      ],
+      "disposition": "implemented",
+      "rationale": "Modeled through provider-neutral typed contracts, role lenses, and executable test suites for closing operations.",
+      "routeOrSurfaceIds": [
+        "surface.closing",
+        "surface.task-frame"
+      ],
+      "contractIds": [
+        "contract.closing",
+        "contract.work-item"
+      ],
+      "scenarioOrTestIds": [
+        "test.clos-001",
+        "test.retention-coverage"
+      ],
+      "releaseCommit": "HEAD"
+    },
+    {
+      "id": "FUND-001",
+      "area": "funding",
+      "capability": "Role-separated funding checklist, document/source actions, closing schedule, authority boundary, and blocked release gate",
+      "primaryLenses": [
+        "closing",
+        "funding",
+        "funding-control-approver",
+        "manager"
+      ],
+      "disposition": "implemented",
+      "rationale": "Modeled through provider-neutral typed contracts, role lenses, and executable test suites for funding operations.",
+      "routeOrSurfaceIds": [
+        "surface.funding",
+        "surface.task-frame"
+      ],
+      "contractIds": [
+        "contract.funding",
+        "contract.work-item"
+      ],
+      "scenarioOrTestIds": [
+        "test.fund-001",
+        "test.retention-coverage"
+      ],
+      "releaseCommit": "HEAD"
+    },
+    {
+      "id": "FUND-002",
+      "area": "funding",
+      "capability": "Disbursement/wire authorization, dual control, exact amounts/parties, dispatch, partial/unknown effect, reconciliation, and compensation/hold",
+      "primaryLenses": [
+        "funding",
+        "funding-control-approver",
+        "manager",
+        "auditor"
+      ],
+      "disposition": "implemented",
+      "rationale": "Modeled through provider-neutral typed contracts, role lenses, and executable test suites for funding operations.",
+      "routeOrSurfaceIds": [
+        "surface.funding",
+        "surface.task-frame"
+      ],
+      "contractIds": [
+        "contract.funding",
+        "contract.work-item"
+      ],
+      "scenarioOrTestIds": [
+        "test.fund-002",
+        "test.retention-coverage"
+      ],
+      "releaseCommit": "HEAD"
+    },
+    {
+      "id": "POST-001",
+      "area": "shipping-post-close",
+      "capability": "Final package assembly, validation, stacking/indexing, certified copy/version, and delivery acknowledgement",
+      "primaryLenses": [
+        "shipping",
+        "quality-control"
+      ],
+      "disposition": "implemented",
+      "rationale": "Modeled through provider-neutral typed contracts, role lenses, and executable test suites for shipping-post-close operations.",
+      "routeOrSurfaceIds": [
+        "surface.shipping.post.close",
+        "surface.task-frame"
+      ],
+      "contractIds": [
+        "contract.shipping.post.close",
+        "contract.work-item"
+      ],
+      "scenarioOrTestIds": [
+        "test.post-001",
+        "test.retention-coverage"
+      ],
+      "releaseCommit": "HEAD"
+    },
+    {
+      "id": "POST-002",
+      "area": "shipping-post-close",
+      "capability": "Trailing documents, recording, endorsements, assignments, custody, purchase suspense, deficiencies, cures, and ageing",
+      "primaryLenses": [
+        "shipping",
+        "quality-control",
+        "manager"
+      ],
+      "disposition": "implemented",
+      "rationale": "Modeled through provider-neutral typed contracts, role lenses, and executable test suites for shipping-post-close operations.",
+      "routeOrSurfaceIds": [
+        "surface.shipping.post.close",
+        "surface.task-frame"
+      ],
+      "contractIds": [
+        "contract.shipping.post.close",
+        "contract.work-item"
+      ],
+      "scenarioOrTestIds": [
+        "test.post-002",
+        "test.retention-coverage"
+      ],
+      "releaseCommit": "HEAD"
+    },
+    {
+      "id": "INSR-001",
+      "area": "insurance-guaranty",
+      "capability": "Applicable public-program case, premium/funding-fee evidence, document/submission, receipt, suspense, cure, and certificate",
+      "primaryLenses": [
+        "insurance",
+        "underwriter",
+        "shipping"
+      ],
+      "disposition": "implemented",
+      "rationale": "Modeled through provider-neutral typed contracts, role lenses, and executable test suites for insurance-guaranty operations.",
+      "routeOrSurfaceIds": [
+        "surface.insurance.guaranty",
+        "surface.task-frame"
+      ],
+      "contractIds": [
+        "contract.insurance.guaranty",
+        "contract.work-item"
+      ],
+      "scenarioOrTestIds": [
+        "test.insr-001",
+        "test.retention-coverage"
+      ],
+      "releaseCommit": "HEAD"
+    },
+    {
+      "id": "SECO-001",
+      "area": "secondary",
+      "capability": "Commitments, allocations, coverage, expirations, extensions, delivery, fallout, and minimized-data pipeline management",
+      "primaryLenses": [
+        "secondary",
+        "manager"
+      ],
+      "disposition": "implemented",
+      "rationale": "Modeled through provider-neutral typed contracts, role lenses, and executable test suites for secondary operations.",
+      "routeOrSurfaceIds": [
+        "surface.secondary",
+        "surface.task-frame"
+      ],
+      "contractIds": [
+        "contract.secondary",
+        "contract.work-item"
+      ],
+      "scenarioOrTestIds": [
+        "test.seco-001",
+        "test.retention-coverage"
+      ],
+      "releaseCommit": "HEAD"
+    },
+    {
+      "id": "SECO-002",
+      "area": "secondary",
+      "capability": "Purchase-advice, price/fee adjustment, suspense, and source-to-ledger reconciliation",
+      "primaryLenses": [
+        "secondary",
+        "shipping",
+        "quality-control"
+      ],
+      "disposition": "implemented",
+      "rationale": "Modeled through provider-neutral typed contracts, role lenses, and executable test suites for secondary operations.",
+      "routeOrSurfaceIds": [
+        "surface.secondary",
+        "surface.task-frame"
+      ],
+      "contractIds": [
+        "contract.secondary",
+        "contract.work-item"
+      ],
+      "scenarioOrTestIds": [
+        "test.seco-002",
+        "test.retention-coverage"
+      ],
+      "releaseCommit": "HEAD"
+    },
+    {
+      "id": "QC-001",
+      "area": "quality-control",
+      "capability": "Independent review sample, findings, notes, reverification, severity, ownership, response, cure, and closure evidence",
+      "primaryLenses": [
+        "quality-control",
+        "manager",
+        "auditor"
+      ],
+      "disposition": "implemented",
+      "rationale": "Modeled through provider-neutral typed contracts, role lenses, and executable test suites for quality-control operations.",
+      "routeOrSurfaceIds": [
+        "surface.quality.control",
+        "surface.task-frame"
+      ],
+      "contractIds": [
+        "contract.quality.control",
+        "contract.work-item"
+      ],
+      "scenarioOrTestIds": [
+        "test.qc-001",
+        "test.retention-coverage"
+      ],
+      "releaseCommit": "HEAD"
+    },
+    {
+      "id": "QC-002",
+      "area": "quality-control",
+      "capability": "Calibration/agreement, root cause, corrective-action planning, validation, and systemic trend",
+      "primaryLenses": [
+        "quality-control",
+        "manager",
+        "administrator"
+      ],
+      "disposition": "implemented",
+      "rationale": "Modeled through provider-neutral typed contracts, role lenses, and executable test suites for quality-control operations.",
+      "routeOrSurfaceIds": [
+        "surface.quality.control",
+        "surface.task-frame"
+      ],
+      "contractIds": [
+        "contract.quality.control",
+        "contract.work-item"
+      ],
+      "scenarioOrTestIds": [
+        "test.qc-002",
+        "test.retention-coverage"
+      ],
+      "releaseCommit": "HEAD"
+    },
+    {
+      "id": "AUTO-001",
+      "area": "automation",
+      "capability": "Cross-source reconciliation for parties, values, dates, documents, calculations, decisions, and lifecycle state",
+      "primaryLenses": [
+        "setup",
+        "processor",
+        "underwriter",
+        "compliance",
+        "quality-control"
+      ],
+      "disposition": "implemented",
+      "rationale": "Modeled through provider-neutral typed contracts, role lenses, and executable test suites for automation operations.",
+      "routeOrSurfaceIds": [
+        "surface.automation",
+        "surface.task-frame"
+      ],
+      "contractIds": [
+        "contract.automation",
+        "contract.work-item"
+      ],
+      "scenarioOrTestIds": [
+        "test.auto-001",
+        "test.retention-coverage"
+      ],
+      "releaseCommit": "HEAD"
+    },
+    {
+      "id": "AUTO-002",
+      "area": "automation",
+      "capability": "Task generation from missing evidence, deadlines, stale facts, conflicts, findings, dependency changes, and external status",
+      "primaryLenses": [
+        "all-operational",
+        "manager"
+      ],
+      "disposition": "implemented",
+      "rationale": "Modeled through provider-neutral typed contracts, role lenses, and executable test suites for automation operations.",
+      "routeOrSurfaceIds": [
+        "surface.automation",
+        "surface.task-frame"
+      ],
+      "contractIds": [
+        "contract.automation",
+        "contract.work-item"
+      ],
+      "scenarioOrTestIds": [
+        "test.auto-002",
+        "test.retention-coverage"
+      ],
+      "releaseCommit": "HEAD"
+    },
+    {
+      "id": "AUTO-003",
+      "area": "automation",
+      "capability": "Human-in-the-loop attended automation for external portals with session handoff, preflight, screenshots/receipts, and effect uncertainty",
+      "primaryLenses": [
+        "processor",
+        "shipping",
+        "insurance",
+        "support-recovery-operator"
+      ],
+      "disposition": "implemented",
+      "rationale": "Modeled through provider-neutral typed contracts, role lenses, and executable test suites for automation operations.",
+      "routeOrSurfaceIds": [
+        "surface.automation",
+        "surface.task-frame"
+      ],
+      "contractIds": [
+        "contract.automation",
+        "contract.work-item"
+      ],
+      "scenarioOrTestIds": [
+        "test.auto-003",
+        "test.retention-coverage"
+      ],
+      "releaseCommit": "HEAD"
+    },
+    {
+      "id": "AUTO-004",
+      "area": "automation",
+      "capability": "Guideline/authority ingestion lifecycle with source version, extraction, citation, validation, effective dates, supersession, and promotion",
+      "primaryLenses": [
+        "compliance",
+        "underwriter",
+        "administrator",
+        "auditor"
+      ],
+      "disposition": "implemented",
+      "rationale": "Modeled through provider-neutral typed contracts, role lenses, and executable test suites for automation operations.",
+      "routeOrSurfaceIds": [
+        "surface.automation",
+        "surface.task-frame"
+      ],
+      "contractIds": [
+        "contract.automation",
+        "contract.work-item"
+      ],
+      "scenarioOrTestIds": [
+        "test.auto-004",
+        "test.retention-coverage"
+      ],
+      "releaseCommit": "HEAD"
+    },
+    {
+      "id": "AUTO-005",
+      "area": "automation",
+      "capability": "Golden-case review, calibration, disagreement, mutation/regression evidence, and signed promotion for calculations/extraction/rules",
+      "primaryLenses": [
+        "quality-control",
+        "administrator",
+        "auditor"
+      ],
+      "disposition": "implemented",
+      "rationale": "Modeled through provider-neutral typed contracts, role lenses, and executable test suites for automation operations.",
+      "routeOrSurfaceIds": [
+        "surface.automation",
+        "surface.task-frame"
+      ],
+      "contractIds": [
+        "contract.automation",
+        "contract.work-item"
+      ],
+      "scenarioOrTestIds": [
+        "test.auto-005",
+        "test.retention-coverage"
+      ],
+      "releaseCommit": "HEAD"
+    },
+    {
+      "id": "AUTO-006",
+      "area": "automation",
+      "capability": "Event-driven re-evaluation with immutable snapshots, what-changed explanation, pending inputs, governing version, transition-only alert raise/clear, and duplicate-noise suppression",
+      "primaryLenses": [
+        "originator",
+        "processor",
+        "underwriter",
+        "secondary",
+        "manager"
+      ],
+      "disposition": "implemented",
+      "rationale": "Modeled through provider-neutral typed contracts, role lenses, and executable test suites for automation operations.",
+      "routeOrSurfaceIds": [
+        "surface.automation",
+        "surface.task-frame"
+      ],
+      "contractIds": [
+        "contract.automation",
+        "contract.work-item"
+      ],
+      "scenarioOrTestIds": [
+        "test.auto-006",
+        "test.retention-coverage"
+      ],
+      "releaseCommit": "HEAD"
+    },
+    {
+      "id": "QC-003",
+      "area": "quality-control",
+      "capability": "Commit-blind evidence adjudication that opens source before decision, hides model confidence/peer answers until commit, records each assignment once, supports corrected or model-missed fields, and permits controlled void/reassignment",
+      "primaryLenses": [
+        "quality-control",
+        "administrator"
+      ],
+      "disposition": "implemented",
+      "rationale": "Modeled through provider-neutral typed contracts, role lenses, and executable test suites for quality-control operations.",
+      "routeOrSurfaceIds": [
+        "surface.quality.control",
+        "surface.task-frame"
+      ],
+      "contractIds": [
+        "contract.quality.control",
+        "contract.work-item"
+      ],
+      "scenarioOrTestIds": [
+        "test.qc-003",
+        "test.retention-coverage"
+      ],
+      "releaseCommit": "HEAD"
+    },
+    {
+      "id": "SAFE-004",
+      "area": "truth-safety",
+      "capability": "Structural isolation among production work, independent quality review, synthetic evaluation/training, and recreation/demo lanes",
+      "primaryLenses": [
+        "all",
+        "quality-control",
+        "administrator",
+        "auditor"
+      ],
+      "disposition": "implemented",
+      "rationale": "Modeled through provider-neutral typed contracts, role lenses, and executable test suites for truth-safety operations.",
+      "routeOrSurfaceIds": [
+        "surface.truth.safety",
+        "surface.task-frame"
+      ],
+      "contractIds": [
+        "contract.truth.safety",
+        "contract.work-item"
+      ],
+      "scenarioOrTestIds": [
+        "test.safe-004",
+        "test.retention-coverage"
+      ],
+      "releaseCommit": "HEAD"
+    },
+    {
+      "id": "AUDT-001",
+      "area": "audit-provenance",
+      "capability": "Immutable activity, before/after versions, actor/persona, evidence, decisions, approvals, command attempts, causal proof, holds, and exports",
+      "primaryLenses": [
+        "all",
+        "auditor"
+      ],
+      "disposition": "implemented",
+      "rationale": "Modeled through provider-neutral typed contracts, role lenses, and executable test suites for audit-provenance operations.",
+      "routeOrSurfaceIds": [
+        "surface.audit.provenance",
+        "surface.task-frame"
+      ],
+      "contractIds": [
+        "contract.audit.provenance",
+        "contract.work-item"
+      ],
+      "scenarioOrTestIds": [
+        "test.audt-001",
+        "test.retention-coverage"
+      ],
+      "releaseCommit": "HEAD"
+    },
+    {
+      "id": "ADMIN-001",
+      "area": "configuration",
+      "capability": "Role lens, team, queue, SLA, task/handoff template, lender terminology, bounded display metadata, theme, density, accessibility, and preference configuration",
+      "primaryLenses": [
+        "administrator",
+        "all"
+      ],
+      "disposition": "implemented",
+      "rationale": "Modeled through provider-neutral typed contracts, role lenses, and executable test suites for configuration operations.",
+      "routeOrSurfaceIds": [
+        "surface.configuration",
+        "surface.task-frame"
+      ],
+      "contractIds": [
+        "contract.configuration",
+        "contract.work-item"
+      ],
+      "scenarioOrTestIds": [
+        "test.admin-001",
+        "test.retention-coverage"
+      ],
+      "releaseCommit": "HEAD"
+    },
+    {
+      "id": "ADMIN-002",
+      "area": "identity-capability",
+      "capability": "Identity/persona links, teams, capabilities, separation of duties, consent/approval policy, entitlement changes, and session effects",
+      "primaryLenses": [
+        "administrator",
+        "manager",
+        "auditor"
+      ],
+      "disposition": "implemented",
+      "rationale": "Modeled through provider-neutral typed contracts, role lenses, and executable test suites for identity-capability operations.",
+      "routeOrSurfaceIds": [
+        "surface.identity.capability",
+        "surface.task-frame"
+      ],
+      "contractIds": [
+        "contract.identity.capability",
+        "contract.work-item"
+      ],
+      "scenarioOrTestIds": [
+        "test.admin-002",
+        "test.retention-coverage"
+      ],
+      "releaseCommit": "HEAD"
+    },
+    {
+      "id": "INST-001",
+      "area": "installation-lifecycle",
+      "capability": "Mode-explicit guided fresh installation and first adoption: discover, target ownership/custody, preflight, external authority/root requirements, plan, secret handles, separated approval, install, interruption/resume, and readiness limitations",
+      "primaryLenses": [
+        "administrator",
+        "infrastructure-data-custodian",
+        "separated-approver",
+        "support-recovery-operator"
+      ],
+      "disposition": "implemented",
+      "rationale": "Modeled through provider-neutral typed contracts, role lenses, and executable test suites for installation-lifecycle operations.",
+      "routeOrSurfaceIds": [
+        "surface.installation.lifecycle",
+        "surface.task-frame"
+      ],
+      "contractIds": [
+        "contract.installation.lifecycle",
+        "contract.work-item"
+      ],
+      "scenarioOrTestIds": [
+        "test.inst-001",
+        "test.retention-coverage"
+      ],
+      "releaseCommit": "HEAD"
+    },
+    {
+      "id": "INST-002",
+      "area": "installation-lifecycle",
+      "capability": "Repair, credential/certificate rotation, scale, upgrade, backup, restore, rollback, cancellation after every effect boundary, compensation, deactivation, decommission, uninstall, and tombstone",
+      "primaryLenses": [
+        "administrator",
+        "security-administrator",
+        "infrastructure-data-custodian",
+        "separated-approver",
+        "support-recovery-operator",
+        "auditor"
+      ],
+      "disposition": "implemented",
+      "rationale": "Modeled through provider-neutral typed contracts, role lenses, and executable test suites for installation-lifecycle operations.",
+      "routeOrSurfaceIds": [
+        "surface.installation.lifecycle",
+        "surface.task-frame"
+      ],
+      "contractIds": [
+        "contract.installation.lifecycle",
+        "contract.work-item"
+      ],
+      "scenarioOrTestIds": [
+        "test.inst-002",
+        "test.retention-coverage"
+      ],
+      "releaseCommit": "HEAD"
+    },
+    {
+      "id": "INST-003",
+      "area": "operations",
+      "capability": "Capability/integration inventory, health, lease/re-attestation, diagnostics, expiry, recovery/takeover, support bundle, release/support matrix, and redacted receipts",
+      "primaryLenses": [
+        "administrator",
+        "security-administrator",
+        "infrastructure-data-custodian",
+        "support-recovery-operator",
+        "auditor"
+      ],
+      "disposition": "implemented",
+      "rationale": "Modeled through provider-neutral typed contracts, role lenses, and executable test suites for operations operations.",
+      "routeOrSurfaceIds": [
+        "surface.operations",
+        "surface.task-frame"
+      ],
+      "contractIds": [
+        "contract.operations",
+        "contract.work-item"
+      ],
+      "scenarioOrTestIds": [
+        "test.inst-003",
+        "test.retention-coverage"
+      ],
+      "releaseCommit": "HEAD"
+    },
+    {
+      "id": "INST-004",
+      "area": "migration-cutover",
+      "capability": "Typed migration, watermark/delta capture, semantic reconciliation, in-flight attempt/cursor/dedupe/hold preservation, final fence, cutover, forward replay, external-effect reconciliation, and safe reverse cutback",
+      "primaryLenses": [
+        "administrator",
+        "infrastructure-data-custodian",
+        "separated-approver",
+        "support-recovery-operator",
+        "auditor"
+      ],
+      "disposition": "implemented",
+      "rationale": "Modeled through provider-neutral typed contracts, role lenses, and executable test suites for migration-cutover operations.",
+      "routeOrSurfaceIds": [
+        "surface.migration.cutover",
+        "surface.task-frame"
+      ],
+      "contractIds": [
+        "contract.migration.cutover",
+        "contract.work-item"
+      ],
+      "scenarioOrTestIds": [
+        "test.inst-004",
+        "test.retention-coverage"
+      ],
+      "releaseCommit": "HEAD"
+    },
+    {
+      "id": "PREF-001",
+      "area": "experience",
+      "capability": "Light/dark/high-contrast/print themes, density, responsive layouts, keyboard shortcuts, reduced motion, localization expansion, pop-outs/multi-window, and preference sync",
+      "primaryLenses": [
+        "all"
+      ],
+      "disposition": "implemented",
+      "rationale": "Modeled through provider-neutral typed contracts, role lenses, and executable test suites for experience operations.",
+      "routeOrSurfaceIds": [
+        "surface.experience",
+        "surface.task-frame"
+      ],
+      "contractIds": [
+        "contract.experience",
+        "contract.work-item"
+      ],
+      "scenarioOrTestIds": [
+        "test.pref-001",
+        "test.retention-coverage"
+      ],
+      "releaseCommit": "HEAD"
+    },
+    {
+      "id": "SAFE-001",
+      "area": "truth-safety",
+      "capability": "Orthogonal observation, access, completeness, processing/validity, selection, review, freshness, and source/version presentation",
+      "primaryLenses": [
+        "all"
+      ],
+      "disposition": "implemented",
+      "rationale": "Modeled through provider-neutral typed contracts, role lenses, and executable test suites for truth-safety operations.",
+      "routeOrSurfaceIds": [
+        "surface.truth.safety",
+        "surface.task-frame"
+      ],
+      "contractIds": [
+        "contract.truth.safety",
+        "contract.work-item"
+      ],
+      "scenarioOrTestIds": [
+        "test.safe-001",
+        "test.retention-coverage"
+      ],
+      "releaseCommit": "HEAD"
+    },
+    {
+      "id": "SAFE-002",
+      "area": "truth-safety",
+      "capability": "Draft, field-change, and domain-command flows with exact scope, preconditions, consent, approval, idempotency/correlation, partial result, effect-unknown hold, verification, cancellation, and compensation",
+      "primaryLenses": [
+        "all-operational",
+        "auditor"
+      ],
+      "disposition": "implemented",
+      "rationale": "Modeled through provider-neutral typed contracts, role lenses, and executable test suites for truth-safety operations.",
+      "routeOrSurfaceIds": [
+        "surface.truth.safety",
+        "surface.task-frame"
+      ],
+      "contractIds": [
+        "contract.truth.safety",
+        "contract.work-item"
+      ],
+      "scenarioOrTestIds": [
+        "test.safe-002",
+        "test.retention-coverage"
+      ],
+      "releaseCommit": "HEAD"
+    },
+    {
+      "id": "SAFE-003",
+      "area": "privacy-security",
+      "capability": "NPI minimization, redaction, hostile-content rendering, sandboxed document view, safe pop-out/deep-link/search behavior, and no browser canonical authority",
+      "primaryLenses": [
+        "all"
+      ],
+      "disposition": "implemented",
+      "rationale": "Modeled through provider-neutral typed contracts, role lenses, and executable test suites for privacy-security operations.",
+      "routeOrSurfaceIds": [
+        "surface.privacy.security",
+        "surface.task-frame"
+      ],
+      "contractIds": [
+        "contract.privacy.security",
+        "contract.work-item"
+      ],
+      "scenarioOrTestIds": [
+        "test.safe-003",
+        "test.retention-coverage"
+      ],
+      "releaseCommit": "HEAD"
+    },
+    {
+      "id": "LEARN-001",
+      "area": "learning-quality",
+      "capability": "Contextual explanations, evidence-backed playbooks, scenario rehearsal, role-scoped mastery/calibration, and feedback from recurring errors",
+      "primaryLenses": [
+        "all-operational",
+        "manager",
+        "quality-control"
+      ],
+      "disposition": "implemented",
+      "rationale": "Modeled through provider-neutral typed contracts, role lenses, and executable test suites for learning-quality operations.",
+      "routeOrSurfaceIds": [
+        "surface.learning.quality",
+        "surface.task-frame"
+      ],
+      "contractIds": [
+        "contract.learning.quality",
+        "contract.work-item"
+      ],
+      "scenarioOrTestIds": [
+        "test.learn-001",
+        "test.retention-coverage"
+      ],
+      "releaseCommit": "HEAD"
+    },
+    {
+      "id": "VEND-001",
+      "area": "vendor-operations",
+      "capability": "Optional vendor/service capability health, due diligence, risk/review status, evidence expiry, incidents, and service performance without provider-specific core logic",
+      "primaryLenses": [
+        "administrator",
+        "support-recovery-operator",
+        "manager"
+      ],
+      "disposition": "implemented",
+      "rationale": "Modeled through provider-neutral typed contracts, role lenses, and executable test suites for vendor-operations operations.",
+      "routeOrSurfaceIds": [
+        "surface.vendor.operations",
+        "surface.task-frame"
+      ],
+      "contractIds": [
+        "contract.vendor.operations",
+        "contract.work-item"
+      ],
+      "scenarioOrTestIds": [
+        "test.vend-001",
+        "test.retention-coverage"
+      ],
+      "releaseCommit": "HEAD"
+    }
+  ]
+}
