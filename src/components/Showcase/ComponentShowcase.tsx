@@ -1,4 +1,5 @@
 import React from 'react';
+import { StateMatrixInspector } from './StateMatrixInspector';
 
 export const ComponentShowcase: React.FC = () => {
   return (
@@ -48,6 +49,10 @@ export const ComponentShowcase: React.FC = () => {
             Reject / Exception Hold
           </button>
         </div>
+      </div>
+
+      <div className="space-y-2 border-t border-slate-800 pt-3">
+        <StateMatrixInspector />
       </div>
 
       <div className="space-y-2 border-t border-slate-800 pt-3">
