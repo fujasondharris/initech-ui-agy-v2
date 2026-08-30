@@ -3,7 +3,7 @@
 - **Repository:** `fujasondharris/initech-ui-agy-v2`
 - **Root Commit:** `f7d907982bf787591cee10855d6464a17dabe895`
 - **Candidate Tag:** `v1.0.0-candidate`
-- **Candidate Commit:** `18691cc252bc80cac3d07cea9b179d13155bbb29`
+- **Candidate Commit:** `ba2db2b46794b121aa4fe15ce231a9059c4ddc88`
 - **Builder:** AGY (DeepMind Advanced Agentic Coding)
 - **Current Milestone:** Candidate Freeze
 - **Evaluation State:** `CANDIDATE_READY_FOR_EXTERNAL_EVALUATION`
@@ -18,10 +18,10 @@
 | **G2: 70-Row Retention Ledger** | Complete mapping of all 70 retention rows with routes, contracts, tests | ✅ **PASSED** | [`docs/behavior-retention.json`](docs/behavior-retention.json) |
 | **G3: Presentation & Task Contracts** | TypeScript schemas for WorkItem, Projection, Evidence, Finding, Command | ✅ **PASSED** | [`src/contracts/`](src/contracts/) |
 | **G4: 3 Independent Concepts** | Define and score 3 distinct IAs; select 1 task-centered reference | ✅ **PASSED** | [`docs/three-independent-concepts.md`](docs/three-independent-concepts.md) |
-| **G5: Design Tokens & Component Showcase** | Accessible design system, 20 role lenses, universal frame | ✅ **PASSED** | [`src/tokens/`](src/tokens/), [`src/components/`](src/components/) |
+| **G5: Design Tokens, State Matrix & Component Showcase** | Accessible design system, 20 role lenses, 24-state dimension inspector | ✅ **PASSED** | [`src/tokens/`](src/tokens/), [`src/components/Showcase/StateMatrixInspector.tsx`](src/components/Showcase/StateMatrixInspector.tsx) |
 | **G6: 14 Common Scenarios Runnable** | Execute all 14 scenarios against exact owner-pinned fixtures & mock sequences | ✅ **PASSED** | [`traces/`](traces/), [`src/scenarios/scenarioRunner.ts`](src/scenarios/scenarioRunner.ts) |
 | **G7: Comprehensive Test Suites & Neutrality Scan** | 100% passing Vitest (11 test files), accessibility, security, and 0-violation neutrality scan | ✅ **PASSED** | `npm test` (11 test suites passed), `scripts/scan-neutrality.py` (0 violations) |
-| **G8: Production Build Verification** | Strict TypeScript and Vite production bundle generated | ✅ **PASSED** | `npm run build` (`dist/` bundle created in 435ms) |
+| **G8: Production Build Verification** | Strict TypeScript and Vite production bundle generated | ✅ **PASSED** | `npm run build` (`dist/` bundle created in 414ms) |
 
 ---
 
@@ -42,17 +42,17 @@ python3 scripts/scan-neutrality.py
 ### 3. Test Suites Execution (Vitest)
 ```bash
 npm test
+#  ✓ src/tests/maliciousContent.test.ts  (1 test)
 #  ✓ src/tests/permissionChange.test.ts  (1 test)
+#  ✓ src/tests/commandSafety.test.ts     (1 test)
 #  ✓ src/tests/offlineStale.test.ts      (1 test)
 #  ✓ src/tests/sbom.test.ts              (1 test)
-#  ✓ src/tests/commandSafety.test.ts     (1 test)
-#  ✓ src/tests/retention.test.ts         (1 test - validates all 70 capability rows)
 #  ✓ src/tests/secrets.test.ts           (1 test)
-#  ✓ src/tests/maliciousContent.test.ts  (1 test)
+#  ✓ src/tests/retention.test.ts         (1 test - validates all 70 capability rows)
 #  ✓ src/tests/responsive.test.ts        (1 test)
-#  ✓ src/tests/scenarios.test.ts         (1 test - executes all 14 scenarios)
 #  ✓ src/tests/accessibility.test.ts     (2 tests)
 #  ✓ src/tests/contracts.test.ts         (1 test - validates all 20 role lenses)
+#  ✓ src/tests/scenarios.test.ts         (1 test - executes all 14 scenarios)
 # Test Files  11 passed (11)
 # Tests       12 passed (12)
 ```
@@ -62,7 +62,7 @@ npm test
 npm run build
 # vite v5.4.21 building for production...
 # dist/index.html                   0.60 kB │ gzip:  0.38 kB
-# dist/assets/index-Dic6ZHPH.css   20.45 kB │ gzip:  4.13 kB
-# dist/assets/index-DGb3aOq8.js   203.30 kB │ gzip: 58.42 kB
-# ✓ built in 435ms
+# dist/assets/index-G4LmYYdq.css   20.98 kB │ gzip:  4.23 kB
+# dist/assets/index-C8-U3ch8.js   212.64 kB │ gzip: 60.76 kB
+# ✓ built in 414ms
 ```
